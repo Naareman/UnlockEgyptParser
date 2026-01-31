@@ -10,7 +10,7 @@
       "city": "Alexandria",
       "latitude": 31.1950754,
       "longitude": 29.9039742,
-      "shortDescription": "In the heart of modern Alexandria lies the Kom el-Dikka archaeological site, a remarkable open-air museum that preserves the remains of a prestigious residential and civic quarter from the Roman and Byzantine periods (2nd to 6th centuries AD).\n\nThe centerpiece of the site is the well-preserved Roman Theater (Odeon), the only example of its kind in Egypt. Its tiered marble seats and mosaic-lined galleries reflect the city's affluent urban culture.\n\nSurrounding the theater, visitors can explore:\n\nThe Villa of the Birds, featuring stunning floor mosaics depicting various birds and geometric patterns.\n\nThe remains of extensive Roman Baths, which showcase advanced engineering, including a hypocaust (underfloor heating) system.\n\nA large complex of lecture halls, believed to be part of a philosophical school or university, offering a rare glimpse into ancient academic life.\n\nThe site also displays a collection of artifacts and sculptures recovered from the sunken ruins of the ancient city, providing a direct link to Alexandria's legendary past.\n\nTogether, these discoveries illustrate the social, cultural, and intellectual vitality of ancient Alexandria, highlighting its evolution from a Hellenistic capital into a thriving Roman and Byzantine metropolis.",
+      "shortDescription": "In the heart of modern Alexandria lies the Kom el-Dikka archaeological site, a remarkable open-air museum that preserves the remains of a prestigious residential and civic quarter from the Roman and Byzantine periods (2nd to 6th centuries AD).\n\nThe centerpiece of the site is the well-preserved Roman Theater (Odeon), the only example of its kind in Egypt. Its tiered marble seats and mosaic-lined galleries reflect the city&#x27;s affluent urban culture.\n\nSurrounding the theater, visitors can explore:\n\nThe Villa of the Birds, featuring stunning floor mosaics depicting various birds and geometric patterns.\n\nThe remains of extensive Roman Baths, which showcase advanced engineering, including a hypocaust (underfloor heating) system.\n\nA large complex of lecture halls, believed to be part of a philosophical school or university, offering a rare glimpse into ancient academic life.\n\nThe site also displays a collection of artifacts and sculptures recovered from the sunken ruins of the ancient city, providing a direct link to Alexandria&#x27;s legendary past.\n\nTogether, these discoveries illustrate the social, cultural, and intellectual vitality of ancient Alexandria, highlighting its evolution from a Hellenistic capital into a thriving Roman and Byzantine metropolis.",
       "imageNames": [
         "https://egymonuments.gov.eg/media/8912/picture1.jpg?center=0.544,0.545045045045045&mode=crop&width=367&height=180&rnd=134121720940000000"
       ],
@@ -44,7 +44,7 @@
       "city": "Aswan",
       "latitude": 24.0910553,
       "longitude": 32.890111,
-      "shortDescription": "Elephantine is an archaeological island on the Nile Riverbank, which was the gateway into Egypt for all traders entering from Nubia.\n\nMany different monuments await you here, including the remains of ancient houses that belongs to the temple of the god of the annual Nile flood khnum , and the temple of the goddess who guarded Egypt's Sothern frontiers, Satet, who was also associated with the annual Nile flood. Make sure you don't miss the Nilometer or the nearby museum, where the objects discovered by the German archaeological mission that works on the island are on display. The island of Elephantine was inscribed on UNESCO'S World Heritage List in 1979.",
+      "shortDescription": "Elephantine is an archaeological island on the Nile Riverbank, which was the gateway into Egypt for all traders entering from Nubia.\n\nMany different monuments await you here, including the remains of ancient houses that belongs to the temple of the god of the annual Nile flood khnum , and the temple of the goddess who guarded Egypt&#x27;s Sothern frontiers, Satet, who was also associated with the annual Nile flood. Make sure you don&#x27;t miss the Nilometer or the nearby museum, where the objects discovered by the German archaeological mission that works on the island are on display. The island of Elephantine was inscribed on UNESCO&#x27;S World Heritage List in 1979.",
       "imageNames": [
         "https://egymonuments.gov.eg/media/8353/%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9-%D8%A5%D9%84%D9%81%D9%86%D8%AA%D9%8A%D9%86.jpg?anchor=center&mode=crop&width=367&height=180&rnd=134121768400000000"
       ],
@@ -95,7 +95,7 @@
       "city": "Cairo",
       "latitude": null,
       "longitude": null,
-      "shortDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city's garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari.",
+      "shortDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city&#x27;s garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari.",
       "imageNames": [
         "https://egymonuments.gov.eg/media/8187/download.jpg?anchor=center&mode=crop&width=367&height=180&rnd=133624022840000000"
       ],
@@ -183,7 +183,7 @@
       "siteId": "site_003",
       "name": "Temple of Khnum",
       "arabicName": "",
-      "shortDescription": "The Temple of Khnum is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Khnum is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     },
     {
@@ -191,7 +191,7 @@
       "siteId": "site_003",
       "name": "Temple of Satet",
       "arabicName": "",
-      "shortDescription": "The Temple of Satet is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Satet is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     },
     {
@@ -207,7 +207,7 @@
       "siteId": "site_004",
       "name": "Temple of Ahmose",
       "arabicName": "",
-      "shortDescription": "The Temple of Ahmose is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Ahmose is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     },
     {
@@ -239,7 +239,7 @@
       "siteId": "site_008",
       "name": "Temple of Amun",
       "arabicName": "",
-      "shortDescription": "The Temple of Amun is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Amun is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     },
     {
@@ -247,7 +247,7 @@
       "siteId": "site_008",
       "name": "Temple of Thoth",
       "arabicName": "",
-      "shortDescription": "The Temple of Thoth is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Thoth is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     },
     {
@@ -255,7 +255,7 @@
       "siteId": "site_008",
       "name": "Temple of Isis",
       "arabicName": "",
-      "shortDescription": "The Temple of Isis is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "shortDescription": "The Temple of Isis is a sacred site dedicated to ancient Egyptian religious practices.",
       "imageName": ""
     }
   ],
@@ -288,12 +288,12 @@
     {
       "id": "site_003_sub_01_card_01",
       "subLocationId": "site_003_sub_01",
-      "fullDescription": "The Temple of Khnum is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Khnum is a sacred site dedicated to ancient Egyptian religious practices."
     },
     {
       "id": "site_003_sub_02_card_01",
       "subLocationId": "site_003_sub_02",
-      "fullDescription": "The Temple of Satet is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Satet is a sacred site dedicated to ancient Egyptian religious practices."
     },
     {
       "id": "site_003_sub_03_card_01",
@@ -303,7 +303,7 @@
     {
       "id": "site_004_sub_01_card_01",
       "subLocationId": "site_004_sub_01",
-      "fullDescription": "The Temple of Ahmose is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Ahmose is a sacred site dedicated to ancient Egyptian religious practices."
     },
     {
       "id": "site_005_sub_01_card_01",
@@ -313,7 +313,7 @@
     {
       "id": "site_006_sub_01_card_01",
       "subLocationId": "site_006_sub_01",
-      "fullDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city's garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari."
+      "fullDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city&#x27;s garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari."
     },
     {
       "id": "site_007_sub_01_card_01",
@@ -323,17 +323,17 @@
     {
       "id": "site_008_sub_01_card_01",
       "subLocationId": "site_008_sub_01",
-      "fullDescription": "The Temple of Amun is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Amun is a sacred site dedicated to ancient Egyptian religious practices."
     },
     {
       "id": "site_008_sub_02_card_01",
       "subLocationId": "site_008_sub_02",
-      "fullDescription": "The Temple of Thoth is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Thoth is a sacred site dedicated to ancient Egyptian religious practices."
     },
     {
       "id": "site_008_sub_03_card_01",
       "subLocationId": "site_008_sub_03",
-      "fullDescription": "The Temple of Isis is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+      "fullDescription": "The Temple of Isis is a sacred site dedicated to ancient Egyptian religious practices."
     }
   ],
   "tips": [
