@@ -50,6 +50,91 @@
       ],
       "estimatedDuration": "",
       "bestTimeToVisit": ""
+    },
+    {
+      "id": "site_004",
+      "name": "Al Kab",
+      "arabicName": "الكاب",
+      "era": "New Kingdom",
+      "tourismType": "Pharaonic",
+      "placeType": "Temple",
+      "city": "Aswan",
+      "latitude": 31.0966745,
+      "longitude": 29.7736032,
+      "shortDescription": "This is site of ancient city of Nekhbet. as the cult center of the vulture goddess Nekhbet, the tutelary deity of Upper Egypt. Here, you will find many important monuments dating all the way back from the Predynastic Period to the Graeco-Roman Period, most notably the remains of the temple of Nekhbet and the walls of ancient city.\n\nDo not miss the beautifully decorated New Kingdom tombs and especially the biographical inscriptions carved into their walls like those of Paheri, Ahmose Pennekhbet, and most famous of all, Ahmose, son of Abana, who fought against the Hyksos just in the New Kingdom.",
+      "imageNames": [
+        "https://egymonuments.gov.eg/media/8350/%D8%A7%D9%84%D9%83%D8%A7%D8%A8.jpg?anchor=center&mode=crop&width=367&height=180&rnd=134121740480000000"
+      ],
+      "estimatedDuration": "",
+      "bestTimeToVisit": ""
+    },
+    {
+      "id": "site_005",
+      "name": "Aswan",
+      "arabicName": "أسوان",
+      "era": "",
+      "tourismType": "Coptic",
+      "placeType": "Temple",
+      "city": "Aswan",
+      "latitude": 24.091071,
+      "longitude": 32.897306,
+      "shortDescription": "Aswan, called Sunn by the ancient Egyptians, is one of the most important cities in the south of Egypt, and acted as its southern gateway throughout history. As necessary stop for all traders and merchants coming from Nubia through the Nile, it was the link between Egypt and Africa. Aswan is the site of many archaeological sites and important landmarks such as the island of Elephantine, the ancient Egyptian granite quarries including the Unfinished Obelisk, the Coptic monastery of St Simeon, and the Nubian Museum.\n\nTravelling a short distance to the north, you will find yourself in the temples of Edfu and Kom Ombo. To the south of Aswan, get on board a boat that will take you to the temples of Philae on the island of Agilkia. Farther to the south lies the Aswan high dam and, beyond it, you can explore the many great monuments of New Kalabsha Island. A southward journey of around 300km will take you to the legendary temples of Abu Simbel.",
+      "imageNames": [
+        "https://egymonuments.gov.eg/media/8343/%D8%A3%D8%B3%D9%88%D8%A7%D9%86.jpeg?anchor=center&mode=crop&width=367&height=180&rnd=133680283280000000"
+      ],
+      "estimatedDuration": "",
+      "bestTimeToVisit": ""
+    },
+    {
+      "id": "site_006",
+      "name": "Al-Bahnasa Tombs",
+      "arabicName": "مقابر البهنسا",
+      "era": "Islamic",
+      "tourismType": "Islamic",
+      "placeType": "Tomb",
+      "city": "Cairo",
+      "latitude": null,
+      "longitude": null,
+      "shortDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city's garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari.",
+      "imageNames": [
+        "https://egymonuments.gov.eg/media/8187/download.jpg?anchor=center&mode=crop&width=367&height=180&rnd=133624022840000000"
+      ],
+      "estimatedDuration": "",
+      "bestTimeToVisit": ""
+    },
+    {
+      "id": "site_007",
+      "name": "Amada Temples",
+      "arabicName": "معابد عمدا",
+      "era": "",
+      "tourismType": "Pharaonic",
+      "placeType": "Temple",
+      "city": "Aswan",
+      "latitude": null,
+      "longitude": null,
+      "shortDescription": "Today, the temple of Amada, the temple of al-Derr, and the tomb of Pennut are located in the site of New Amada, around 160 km south of Aswan. They were in danger of permanent submersion under the waters of the Nile with the construction of the Aswan High Dam in the 1960s. Because of their immense historical value, these ancient monuments were rescued by UNESCO’s operation to salvage the monuments in Nubia. They were dismantled and relocated from their original sites to their new home in New Amada, just a few kilometres away. Since 1979, these beautiful monuments are now inscribed on UNESCO’s World Heritage List.",
+      "imageNames": [
+        "https://egymonuments.gov.eg/media/7918/0288.jpg?center=0.65306122448979587,0.67873303167420818&mode=crop&width=367&height=180&rnd=134121772050000000"
+      ],
+      "estimatedDuration": "",
+      "bestTimeToVisit": ""
+    },
+    {
+      "id": "site_008",
+      "name": "Temples of Wadi al Sebua",
+      "arabicName": "معابد وادي السبوع",
+      "era": "",
+      "tourismType": "Greco-Roman",
+      "placeType": "Temple",
+      "city": "Aswan",
+      "latitude": null,
+      "longitude": null,
+      "shortDescription": "The site New Wadi al-Sebua results from the relocation of temples in Nubia after the construction of the Aswan High Dam in the 1960s by the Egyptian government. It is only 4 km northwest of the original site of Wadi al-Sebua. It welcomes several temples about to be covered with the Nile water. It hosts the Ramessid temple of Wadi al-Sebua dedicated to Amun-Ra and Ra-Horakhty, the Graeco-Roman temple of Dakka dedicated to Thoth, and the Roman temple of al-Mahrraqa dedicated to the couple Isis and Serapis. All these temples were inscribed on the UNESCO World Heritage Site in 1979 as part of Nubian Monuments.",
+      "imageNames": [
+        "https://egymonuments.gov.eg/media/7905/dsc_0173.jpg?crop=0,0.21964132157768776,0,0.034407020233938768&cropmode=percentage&width=367&height=180&rnd=134121766220000000"
+      ],
+      "estimatedDuration": "",
+      "bestTimeToVisit": ""
     }
   ],
   "subLocations": [
@@ -116,6 +201,62 @@
       "arabicName": "",
       "shortDescription": "The Nilometer is a significant historical monument worthy of exploration.",
       "imageName": ""
+    },
+    {
+      "id": "site_004_sub_01",
+      "siteId": "site_004",
+      "name": "Temple of Ahmose",
+      "arabicName": "",
+      "shortDescription": "The Temple of Ahmose is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "imageName": ""
+    },
+    {
+      "id": "site_005_sub_01",
+      "siteId": "site_005",
+      "name": "Obelisk",
+      "arabicName": "",
+      "shortDescription": "The Obelisk is a significant historical monument worthy of exploration.",
+      "imageName": ""
+    },
+    {
+      "id": "site_006_sub_01",
+      "siteId": "site_006",
+      "name": "Al-Bahnasa Tombs",
+      "arabicName": "",
+      "shortDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments.",
+      "imageName": ""
+    },
+    {
+      "id": "site_007_sub_01",
+      "siteId": "site_007",
+      "name": "Amada Temples",
+      "arabicName": "",
+      "shortDescription": "Today, the temple of Amada, the temple of al-Derr, and the tomb of Pennut are located in the site of New Amada, around 160 km south of Aswan. They were in danger of permanent submersion under the waters of the Nile with the construction of the Aswan High Dam in the 1960s.",
+      "imageName": ""
+    },
+    {
+      "id": "site_008_sub_01",
+      "siteId": "site_008",
+      "name": "Temple of Amun",
+      "arabicName": "",
+      "shortDescription": "The Temple of Amun is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "imageName": ""
+    },
+    {
+      "id": "site_008_sub_02",
+      "siteId": "site_008",
+      "name": "Temple of Thoth",
+      "arabicName": "",
+      "shortDescription": "The Temple of Thoth is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "imageName": ""
+    },
+    {
+      "id": "site_008_sub_03",
+      "siteId": "site_008",
+      "name": "Temple of Isis",
+      "arabicName": "",
+      "shortDescription": "The Temple of Isis is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt.",
+      "imageName": ""
     }
   ],
   "cards": [
@@ -158,6 +299,41 @@
       "id": "site_003_sub_03_card_01",
       "subLocationId": "site_003_sub_03",
       "fullDescription": "The Nilometer is a significant historical monument worthy of exploration."
+    },
+    {
+      "id": "site_004_sub_01_card_01",
+      "subLocationId": "site_004_sub_01",
+      "fullDescription": "The Temple of Ahmose is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+    },
+    {
+      "id": "site_005_sub_01_card_01",
+      "subLocationId": "site_005_sub_01",
+      "fullDescription": "The Obelisk is a significant historical monument worthy of exploration."
+    },
+    {
+      "id": "site_006_sub_01_card_01",
+      "subLocationId": "site_006_sub_01",
+      "fullDescription": "Al-Bahansa is famous for its ancient cemeteries and hills, and for the births of saints and martyrs, and many developments and changes came to it throughout the historical ages. The city of Al-Bahansa was of an important position in the Islamic era, as evidenced by many existing and vanished monuments. It was also an important commercial center located on the path leading to the Bahariya Oasis. The ancient tombs of Al-Bahansa include many domes and shrines of the Companions, followers and scholars, who came to it and cited it during the Islamic conquest of Egypt, as the city's garrison strongly resisted the Muslim army during its conquest, which led to the martyrdom of a large number of Muslims. Among the ancient domes in it are the dome of the Seven Girls, the dome of Ubadah ibn al-Samit and the dome of Muhammad ibn Abi Dhar al-Ghafari."
+    },
+    {
+      "id": "site_007_sub_01_card_01",
+      "subLocationId": "site_007_sub_01",
+      "fullDescription": "Today, the temple of Amada, the temple of al-Derr, and the tomb of Pennut are located in the site of New Amada, around 160 km south of Aswan. They were in danger of permanent submersion under the waters of the Nile with the construction of the Aswan High Dam in the 1960s. Because of their immense historical value, these ancient monuments were rescued by UNESCO’s operation to salvage the monuments in Nubia. They were dismantled and relocated from their original sites to their new home in New Amada, just a few kilometres away. Since 1979, these beautiful monuments are now inscribed on UNESCO’s World Heritage List."
+    },
+    {
+      "id": "site_008_sub_01_card_01",
+      "subLocationId": "site_008_sub_01",
+      "fullDescription": "The Temple of Amun is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+    },
+    {
+      "id": "site_008_sub_02_card_01",
+      "subLocationId": "site_008_sub_02",
+      "fullDescription": "The Temple of Thoth is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
+    },
+    {
+      "id": "site_008_sub_03_card_01",
+      "subLocationId": "site_008_sub_03",
+      "fullDescription": "The Temple of Isis is a sacred religious site that served as a center of worship and spiritual practice in ancient Egypt."
     }
   ],
   "tips": [
@@ -231,6 +407,102 @@
     },
     {
       "siteId": "site_003",
+      "tip": "Photography may require an additional permit - check at the entrance."
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Opening hours: 07:00 AM - 05:00 PM"
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Ticket prices (foreigners): Adult EGP 200, Student EGP 100"
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Ticket prices (Egyptians): Adult EGP 10, Student EGP 5"
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Carry plenty of water, especially during summer months."
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Wear comfortable walking shoes suitable for uneven terrain."
+    },
+    {
+      "siteId": "site_004",
+      "tip": "Photography may require an additional permit - check at the entrance."
+    },
+    {
+      "siteId": "site_005",
+      "tip": "Carry plenty of water, especially during summer months."
+    },
+    {
+      "siteId": "site_005",
+      "tip": "Wear comfortable walking shoes suitable for uneven terrain."
+    },
+    {
+      "siteId": "site_005",
+      "tip": "Photography may require an additional permit - check at the entrance."
+    },
+    {
+      "siteId": "site_006",
+      "tip": "Start early to avoid crowds and the midday heat."
+    },
+    {
+      "siteId": "site_006",
+      "tip": "Wear comfortable walking shoes suitable for uneven terrain."
+    },
+    {
+      "siteId": "site_006",
+      "tip": "Photography may require an additional permit - check at the entrance."
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Opening hours: 07:00 AM - 04:00 PM"
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Ticket prices (foreigners): Adult EGP 150, Student EGP 75"
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Ticket prices (Egyptians): Adult EGP 10, Student EGP 5"
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Carry plenty of water, especially during summer months."
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Wear comfortable walking shoes suitable for uneven terrain."
+    },
+    {
+      "siteId": "site_007",
+      "tip": "Photography may require an additional permit - check at the entrance."
+    },
+    {
+      "siteId": "site_008",
+      "tip": "Opening hours: 07:00 AM - 04:00 PM"
+    },
+    {
+      "siteId": "site_008",
+      "tip": "Ticket prices (foreigners): Adult EGP 150, Student EGP 75"
+    },
+    {
+      "siteId": "site_008",
+      "tip": "Ticket prices (Egyptians): Adult EGP 10, Student EGP 5"
+    },
+    {
+      "siteId": "site_008",
+      "tip": "Carry plenty of water, especially during summer months."
+    },
+    {
+      "siteId": "site_008",
+      "tip": "Wear comfortable walking shoes suitable for uneven terrain."
+    },
+    {
+      "siteId": "site_008",
       "tip": "Photography may require an additional permit - check at the entrance."
     }
   ],
@@ -321,6 +593,156 @@
     },
     {
       "siteId": "site_003",
+      "english": "Hieroglyphics",
+      "arabic": "هيروغليفية",
+      "pronunciation": "Hieroglyphia"
+    },
+    {
+      "siteId": "site_004",
+      "english": "Temple",
+      "arabic": "معبد",
+      "pronunciation": "Ma'bad"
+    },
+    {
+      "siteId": "site_004",
+      "english": "Pharaoh",
+      "arabic": "فرعون",
+      "pronunciation": "Fir'awn"
+    },
+    {
+      "siteId": "site_004",
+      "english": "God/Goddess",
+      "arabic": "إله/إلهة",
+      "pronunciation": "Ilah/Ilaha"
+    },
+    {
+      "siteId": "site_004",
+      "english": "Columns",
+      "arabic": "أعمدة",
+      "pronunciation": "A'mida"
+    },
+    {
+      "siteId": "site_004",
+      "english": "Hieroglyphics",
+      "arabic": "هيروغليفية",
+      "pronunciation": "Hieroglyphia"
+    },
+    {
+      "siteId": "site_005",
+      "english": "Temple",
+      "arabic": "معبد",
+      "pronunciation": "Ma'bad"
+    },
+    {
+      "siteId": "site_005",
+      "english": "Pharaoh",
+      "arabic": "فرعون",
+      "pronunciation": "Fir'awn"
+    },
+    {
+      "siteId": "site_005",
+      "english": "God/Goddess",
+      "arabic": "إله/إلهة",
+      "pronunciation": "Ilah/Ilaha"
+    },
+    {
+      "siteId": "site_005",
+      "english": "Columns",
+      "arabic": "أعمدة",
+      "pronunciation": "A'mida"
+    },
+    {
+      "siteId": "site_005",
+      "english": "Hieroglyphics",
+      "arabic": "هيروغليفية",
+      "pronunciation": "Hieroglyphia"
+    },
+    {
+      "siteId": "site_006",
+      "english": "Tomb",
+      "arabic": "مقبرة",
+      "pronunciation": "Maqbara"
+    },
+    {
+      "siteId": "site_006",
+      "english": "Mummy",
+      "arabic": "مومياء",
+      "pronunciation": "Mumya"
+    },
+    {
+      "siteId": "site_006",
+      "english": "Coffin",
+      "arabic": "تابوت",
+      "pronunciation": "Taboot"
+    },
+    {
+      "siteId": "site_006",
+      "english": "Noble",
+      "arabic": "نبيل",
+      "pronunciation": "Nabeel"
+    },
+    {
+      "siteId": "site_006",
+      "english": "Cemetery",
+      "arabic": "جبانة",
+      "pronunciation": "Gabbana"
+    },
+    {
+      "siteId": "site_007",
+      "english": "Temple",
+      "arabic": "معبد",
+      "pronunciation": "Ma'bad"
+    },
+    {
+      "siteId": "site_007",
+      "english": "Pharaoh",
+      "arabic": "فرعون",
+      "pronunciation": "Fir'awn"
+    },
+    {
+      "siteId": "site_007",
+      "english": "God/Goddess",
+      "arabic": "إله/إلهة",
+      "pronunciation": "Ilah/Ilaha"
+    },
+    {
+      "siteId": "site_007",
+      "english": "Columns",
+      "arabic": "أعمدة",
+      "pronunciation": "A'mida"
+    },
+    {
+      "siteId": "site_007",
+      "english": "Hieroglyphics",
+      "arabic": "هيروغليفية",
+      "pronunciation": "Hieroglyphia"
+    },
+    {
+      "siteId": "site_008",
+      "english": "Temple",
+      "arabic": "معبد",
+      "pronunciation": "Ma'bad"
+    },
+    {
+      "siteId": "site_008",
+      "english": "Pharaoh",
+      "arabic": "فرعون",
+      "pronunciation": "Fir'awn"
+    },
+    {
+      "siteId": "site_008",
+      "english": "God/Goddess",
+      "arabic": "إله/إلهة",
+      "pronunciation": "Ilah/Ilaha"
+    },
+    {
+      "siteId": "site_008",
+      "english": "Columns",
+      "arabic": "أعمدة",
+      "pronunciation": "A'mida"
+    },
+    {
+      "siteId": "site_008",
       "english": "Hieroglyphics",
       "arabic": "هيروغليفية",
       "pronunciation": "Hieroglyphia"

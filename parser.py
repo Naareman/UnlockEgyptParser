@@ -1194,9 +1194,9 @@ def main():
     parser = EgyMonumentsParser(headless=True)
 
     try:
-        # Parse first 3 sites for testing
-        print("Parsing first 3 sites for testing...")
-        sites = parser.parse_sites(max_sites=3)
+        # Parse all sites
+        print("Parsing all sites from egymonuments.gov.eg...")
+        sites = parser.parse_sites(max_sites=None)
 
         # Export results
         output_path = "/Users/nareman/documents/projects/UnlockEgyptParser/parsed_sites.json"
