@@ -78,6 +78,33 @@ logger = setup_logging()
 # CONSTANTS
 # =============================================================================
 
+class PageType:
+    """Supported page types from egymonuments.gov.eg."""
+
+    ARCHAEOLOGICAL_SITES = "archaeological-sites"
+    MONUMENTS = "monuments"
+    MUSEUMS = "museums"
+    SUNKEN_MONUMENTS = "sunken-monuments"
+
+    ALL_TYPES = [ARCHAEOLOGICAL_SITES, MONUMENTS, MUSEUMS, SUNKEN_MONUMENTS]
+
+    @classmethod
+    def get_url(cls, page_type: str) -> str:
+        """Get the listing URL for a page type."""
+        return f"{Config.BASE_URL}/en/{page_type}/"
+
+    @classmethod
+    def get_display_name(cls, page_type: str) -> str:
+        """Get human-readable name for a page type."""
+        names = {
+            cls.ARCHAEOLOGICAL_SITES: "Archaeological Sites",
+            cls.MONUMENTS: "Monuments",
+            cls.MUSEUMS: "Museums",
+            cls.SUNKEN_MONUMENTS: "Sunken Monuments",
+        }
+        return names.get(page_type, page_type.replace("-", " ").title())
+
+
 class Config:
     """Application configuration constants."""
 
@@ -1762,20 +1789,26 @@ class EgyMonumentsParser:
         """Close the parser and release resources."""
         self.scraper.close()
 
-    def get_all_site_links(self, max_sites: Optional[int] = None) -> list[dict]:
+    def get_all_site_links(
+        self,
+        page_type: str = PageType.ARCHAEOLOGICAL_SITES,
+        max_sites: Optional[int] = None
+    ) -> list[dict]:
         """
-        Get all site links from the main listing page.
+        Get all site links from a listing page.
 
         Args:
+            page_type: Type of page to parse (archaeological-sites, monuments, museums, sunken-monuments)
             max_sites: Maximum number of sites to return (None for all)
 
         Returns:
             List of site info dictionaries
         """
         max_sites = Validator.validate_max_sites(max_sites)
+        listing_url = PageType.get_url(page_type)
 
-        logger.info(f"Loading sites listing page: {Config.SITES_URL}")
-        self.scraper.driver.get(Config.SITES_URL)
+        logger.info(f"Loading {PageType.get_display_name(page_type)} page: {listing_url}")
+        self.scraper.driver.get(listing_url)
         self.scraper.wait_for_page_load()
 
         # Click "Show More" to load more sites
@@ -1801,12 +1834,12 @@ class EgyMonumentsParser:
         # Extract site links
         site_links = []
         items = self.scraper.find_elements_safe(By.CSS_SELECTOR, "a.listItem")
-        logger.info(f"Found {len(items)} site items")
+        logger.info(f"Found {len(items)} items")
 
         for item in items:
             try:
                 href = item.get_attribute("href")
-                if not href or "/archaeological-sites/" not in href:
+                if not href or f"/{page_type}/" not in href:
                     continue
 
                 title = item.get_attribute("title") or ""
@@ -1975,22 +2008,36 @@ class EgyMonumentsParser:
         for sub in site.subLocations:
             logger.info(f"    - {sub.name}")
 
-    def parse_sites(self, max_sites: Optional[int] = None) -> list[Site]:
+    def parse_sites(
+        self,
+        page_types: Optional[list[str]] = None,
+        max_sites: Optional[int] = None
+    ) -> list[Site]:
         """
-        Parse all sites from the listing page.
+        Parse sites from one or more listing pages.
 
         Args:
-            max_sites: Maximum number of sites to parse (None for all)
+            page_types: List of page types to parse (default: all types)
+                       Options: archaeological-sites, monuments, museums, sunken-monuments
+            max_sites: Maximum number of sites to parse per page type (None for all)
 
         Returns:
             List of parsed Site objects
         """
-        site_links = self.get_all_site_links(max_sites)
+        if page_types is None:
+            page_types = PageType.ALL_TYPES
 
-        for site_info in site_links:
-            site = self.parse_site_page(site_info)
-            if site:
-                self.sites.append(site)
+        for page_type in page_types:
+            logger.info(f"\n{'='*60}")
+            logger.info(f"Processing: {PageType.get_display_name(page_type)}")
+            logger.info(f"{'='*60}")
+
+            site_links = self.get_all_site_links(page_type=page_type, max_sites=max_sites)
+
+            for site_info in site_links:
+                site = self.parse_site_page(site_info)
+                if site:
+                    self.sites.append(site)
 
         return self.sites
 
@@ -2020,16 +2067,31 @@ def parse_arguments() -> argparse.Namespace:
         Parsed arguments namespace
     """
     parser = argparse.ArgumentParser(
-        description="UnlockEgypt Content Parser - Scrapes archaeological site information from egymonuments.gov.eg",
+        description="UnlockEgypt Content Parser - Scrapes site information from egymonuments.gov.eg",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Page Types:
+  archaeological-sites  Ancient archaeological sites
+  monuments            Historical monuments
+  museums              Museums across Egypt
+  sunken-monuments     Underwater archaeological sites
+
 Examples:
-  python parser.py                          # Parse all sites
-  python parser.py -m 3                     # Parse first 3 sites (testing)
-  python parser.py -o custom_output.json    # Custom output path
-  python parser.py -v                       # Verbose output
-  python parser.py --no-headless            # Show browser window
+  python parser.py                                    # Parse all page types
+  python parser.py -t monuments                       # Parse only monuments
+  python parser.py -t museums -t monuments            # Parse museums and monuments
+  python parser.py -t archaeological-sites -m 3      # Parse first 3 archaeological sites
+  python parser.py -o custom_output.json             # Custom output path
+  python parser.py -v                                # Verbose output
         """
+    )
+
+    parser.add_argument(
+        "-t", "--type",
+        action="append",
+        dest="page_types",
+        choices=PageType.ALL_TYPES,
+        help="Page type(s) to parse (can be specified multiple times). Default: all types"
     )
 
     parser.add_argument(
@@ -2042,7 +2104,7 @@ Examples:
         "-m", "--max-sites",
         type=int,
         default=None,
-        help="Maximum number of sites to parse (default: all)"
+        help="Maximum number of sites to parse per page type (default: all)"
     )
 
     parser.add_argument(
@@ -2075,20 +2137,23 @@ def main():
         logging.getLogger('UnlockEgyptParser').setLevel(logging.DEBUG)
 
     print("=" * 60)
-    print("UnlockEgypt Content Parser v3.0")
+    print("UnlockEgypt Content Parser v3.1")
     print("=" * 60)
+    print()
+
+    # Determine which page types to parse
+    page_types = args.page_types if args.page_types else PageType.ALL_TYPES
+    type_names = [PageType.get_display_name(t) for t in page_types]
+
+    print(f"Page types: {', '.join(type_names)}")
+    if args.max_sites:
+        print(f"Max sites per type: {args.max_sites}")
     print()
 
     headless = not args.no_headless
 
     with EgyMonumentsParser(headless=headless) as parser:
-        # Parse sites
-        if args.max_sites:
-            logger.info(f"Parsing first {args.max_sites} sites...")
-        else:
-            logger.info("Parsing all sites from egymonuments.gov.eg...")
-
-        sites = parser.parse_sites(max_sites=args.max_sites)
+        sites = parser.parse_sites(page_types=page_types, max_sites=args.max_sites)
 
         # Export results
         parser.export_to_json(args.output, strict=args.strict)
@@ -2098,6 +2163,7 @@ def main():
         print("=" * 60)
         print("PARSING COMPLETE")
         print("=" * 60)
+        print(f"\nTotal sites parsed: {len(sites)}")
 
         for site in sites:
             print(f"\n{site.name}")

@@ -1,6 +1,14 @@
 # UnlockEgypt Parser
 
-A production-quality Python parser that scrapes archaeological site information from [egymonuments.gov.eg](https://egymonuments.gov.eg) for the UnlockEgypt iOS app.
+A production-quality Python parser that scrapes site information from [egymonuments.gov.eg](https://egymonuments.gov.eg) for the UnlockEgypt iOS app.
+
+## Version 3.1
+
+Supports all 4 page types from egymonuments.gov.eg:
+- **Archaeological Sites** - Ancient archaeological sites
+- **Monuments** - Historical monuments
+- **Museums** - Museums across Egypt
+- **Sunken Monuments** - Underwater archaeological sites
 
 ## Version 3.0
 
@@ -68,11 +76,20 @@ pip install selenium requests
 ## Usage
 
 ```bash
-# Parse all sites (default)
+# Parse all page types (default)
 python parser.py
 
-# Parse first N sites (for testing)
-python parser.py -m 3
+# Parse specific page type
+python parser.py -t monuments
+python parser.py -t museums
+python parser.py -t archaeological-sites
+python parser.py -t sunken-monuments
+
+# Parse multiple page types
+python parser.py -t monuments -t museums
+
+# Parse first N sites per page type
+python parser.py -t monuments -m 3
 
 # Custom output path
 python parser.py -o custom_output.json
@@ -80,25 +97,29 @@ python parser.py -o custom_output.json
 # Verbose logging (debug mode)
 python parser.py -v
 
-# Show browser window
-python parser.py --no-headless
-
-# Strict validation (fail on invalid data)
-python parser.py --strict
-
 # Combine options
-python parser.py -m 5 -v -o test.json
+python parser.py -t monuments -t museums -m 5 -v -o test.json
 ```
 
 ## CLI Options
 
 | Option | Description |
 |--------|-------------|
+| `-t, --type` | Page type(s) to parse (can be specified multiple times) |
 | `-o, --output` | Output JSON file path (default: parsed_sites.json) |
-| `-m, --max-sites` | Maximum number of sites to parse (default: all) |
+| `-m, --max-sites` | Maximum number of sites per page type (default: all) |
 | `-v, --verbose` | Enable verbose (debug) logging |
 | `--no-headless` | Show browser window |
 | `--strict` | Enable strict validation |
+
+## Page Types
+
+| Type | Description |
+|------|-------------|
+| `archaeological-sites` | Ancient archaeological sites |
+| `monuments` | Historical monuments (temples, etc.) |
+| `museums` | Museums across Egypt |
+| `sunken-monuments` | Underwater archaeological sites |
 
 ## Programmatic Usage
 
