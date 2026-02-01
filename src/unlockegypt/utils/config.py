@@ -17,8 +17,8 @@ class Config:
     Loads config.yaml once and provides access to all settings.
     """
 
-    _instance = None
-    _config: dict = None
+    _instance: "Config | None" = None
+    _config: dict[str, Any] | None = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -26,11 +26,25 @@ class Config:
             cls._instance._load_config()
         return cls._instance
 
-    def _load_config(self):
+    def _load_config(self) -> None:
         """Load configuration from config.yaml."""
-        config_path = Path(__file__).parent.parent / "config.yaml"
+        # Find project root by looking for pyproject.toml
+        config_path = self._find_project_root() / "config.yaml"
         with open(config_path, encoding="utf-8") as f:
             self._config = yaml.safe_load(f)
+
+    @staticmethod
+    def _find_project_root() -> Path:
+        """Find project root by searching for pyproject.toml."""
+        current = Path(__file__).resolve().parent
+        for _ in range(10):  # Prevent infinite loop
+            if (current / "pyproject.toml").exists():
+                return current
+            if current.parent == current:
+                break
+            current = current.parent
+        # Fallback: assume standard src layout (4 levels up from utils/config.py)
+        return Path(__file__).resolve().parent.parent.parent.parent
 
     def get(self, *keys: str, default: Any = None) -> Any:
         """
@@ -102,7 +116,7 @@ class Config:
     @property
     def nominatim_user_agent(self) -> str:
         return self.get("geocoding", "user_agent",
-                       default="UnlockEgyptParser/3.2 (educational project)")
+                       default="UnlockEgyptParser/3.4 (educational project)")
 
 
 # Global config instance

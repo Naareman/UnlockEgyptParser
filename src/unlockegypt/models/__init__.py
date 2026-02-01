@@ -5,7 +5,6 @@ Using slots=True for memory efficiency (Python 3.10+).
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass(slots=True)
@@ -46,8 +45,8 @@ class Site:
     tourismType: str
     placeType: str
     governorate: str
-    latitude: Optional[float]
-    longitude: Optional[float]
+    latitude: float | None
+    longitude: float | None
     shortDescription: str
     fullDescription: str
     imageNames: list[str] = field(default_factory=list)
@@ -62,8 +61,8 @@ class Site:
     keyFigures: list[str] = field(default_factory=list)
     architecturalFeatures: list[str] = field(default_factory=list)
     wikipediaUrl: str = ""
-    rating: Optional[float] = None
-    reviewCount: Optional[int] = None
+    rating: float | None = None
+    reviewCount: int | None = None
 
 
 __all__ = ['Site', 'SubLocation', 'Tip', 'ArabicPhrase']

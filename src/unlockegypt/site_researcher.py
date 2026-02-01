@@ -11,31 +11,31 @@ The goal is to create comprehensive, well-researched data for each site,
 treating this as a research exercise rather than simple web scraping.
 """
 
+import contextlib
 import json
 import logging
 import re
 import time
 from dataclasses import asdict
-from typing import Optional
 from urllib.parse import quote as url_quote
 
 import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     NoSuchElementException,
     StaleElementReferenceException,
     WebDriverException,
 )
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
-from models import Site, SubLocation, Tip, ArabicPhrase
-from researchers.arabic_terms import ArabicTermExtractor
-from researchers.google_maps import GoogleMapsResearcher
-from researchers.governorate import GovernorateService
-from researchers.tips import TipsResearcher
-from researchers.wikipedia import WikipediaResearcher
-from utils import config
+from unlockegypt.models import ArabicPhrase, Site, SubLocation, Tip
+from unlockegypt.researchers.arabic_terms import ArabicTermExtractor
+from unlockegypt.researchers.google_maps import GoogleMapsResearcher
+from unlockegypt.researchers.governorate import GovernorateService
+from unlockegypt.researchers.tips import TipsResearcher
+from unlockegypt.researchers.wikipedia import WikipediaResearcher
+from unlockegypt.utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -83,14 +83,14 @@ class SiteResearcher:
         """
         self.headless = headless if headless is not None else config.headless
         self.base_url = config.base_url
-        self.driver: Optional[webdriver.Chrome] = None
+        self.driver: webdriver.Chrome | None = None
         self.sites: list[Site] = []
         self.site_counter = 0
 
         # Initialize research components
         self.governorate_service = GovernorateService
         self.wikipedia_researcher = WikipediaResearcher()
-        self.google_maps_researcher: Optional[GoogleMapsResearcher] = None
+        self.google_maps_researcher: GoogleMapsResearcher | None = None
         self.arabic_extractor = ArabicTermExtractor()
         self.tips_researcher = TipsResearcher()
 
@@ -122,13 +122,11 @@ class SiteResearcher:
             # Google Maps researcher creates its own driver
             self.google_maps_researcher = GoogleMapsResearcher(driver=None)
 
-    def close(self):
+    def close(self) -> None:
         """Close all resources and clear caches."""
         if self.driver:
-            try:
+            with contextlib.suppress(WebDriverException):
                 self.driver.quit()
-            except WebDriverException:
-                pass
             self.driver = None
 
         if self.google_maps_researcher:
@@ -141,7 +139,7 @@ class SiteResearcher:
     def get_site_links(
         self,
         page_type: str = PageType.ARCHAEOLOGICAL_SITES,
-        max_sites: Optional[int] = None
+        max_sites: int | None = None
     ) -> list[dict]:
         """
         Get all site links from a listing page.
@@ -262,7 +260,7 @@ class SiteResearcher:
         logger.info(f"Total sites found: {len(site_links)}")
         return site_links[:max_sites] if max_sites else site_links
 
-    def research_site(self, site_info: dict) -> Optional[Site]:
+    def research_site(self, site_info: dict) -> Site | None:
         """
         Conduct comprehensive research on a single site.
 
@@ -341,7 +339,7 @@ class SiteResearcher:
             logger.debug(traceback.format_exc())
             return None
 
-    def _research_primary_source(self, url: str, site_info: dict) -> Optional[dict]:
+    def _research_primary_source(self, url: str, site_info: dict) -> dict | None:
         """
         Get detailed information from the primary source (egymonuments.gov.eg).
 
@@ -371,10 +369,16 @@ class SiteResearcher:
                 p_elements = self.driver.find_elements(By.TAG_NAME, "p")
                 for p in p_elements:
                     text = p.text.strip()
-                    if text and len(text) > 40:
-                        # Filter out navigation/footer text
-                        if not any(x in text.lower() for x in ["copyright", "developed by", "all rights reserved", "read more", "click here"]):
-                            paragraphs.append(text)
+                    # Filter valid content paragraphs (skip navigation/footer text)
+                    if (
+                        text
+                        and len(text) > 40
+                        and not any(
+                            x in text.lower()
+                            for x in ["copyright", "developed by", "all rights reserved", "read more", "click here"]
+                        )
+                    ):
+                        paragraphs.append(text)
             except Exception:
                 pass
             data["full_description"] = "\n\n".join(paragraphs)
@@ -626,8 +630,8 @@ class SiteResearcher:
 
     def research_all(
         self,
-        page_types: Optional[list[str]] = None,
-        max_sites: Optional[int] = None
+        page_types: list[str] | None = None,
+        max_sites: int | None = None
     ) -> list[Site]:
         """
         Research all sites from specified page types.

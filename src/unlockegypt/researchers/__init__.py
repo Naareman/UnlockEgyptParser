@@ -2,11 +2,11 @@
 Research components for gathering site information from multiple sources.
 """
 
-from .governorate import GovernorateService
-from .wikipedia import WikipediaResearcher
-from .google_maps import GoogleMapsResearcher
 from .arabic_terms import ArabicTermExtractor
+from .google_maps import GoogleMapsResearcher
+from .governorate import GovernorateService
 from .tips import TipsResearcher
+from .wikipedia import WikipediaResearcher
 
 __all__ = [
     'GovernorateService',

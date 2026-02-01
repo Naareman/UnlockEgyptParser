@@ -6,9 +6,9 @@ A comprehensive research tool that gathers rich, multi-source information about 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
-## Version 3.3
+## Version 3.4
 
-**Research-Oriented Multi-Source Architecture**
+**Research-Oriented Multi-Source Architecture with Standard Python Packaging**
 
 | Feature | Description |
 |---------|-------------|
@@ -80,24 +80,17 @@ python research.py
 ## Usage
 
 ```bash
-# Research all sites (189 total)
-python research.py
+# After installation, use the CLI command:
+unlockegypt                          # Research all sites (189 total)
+unlockegypt -t monuments             # Research specific page type
+unlockegypt -t museums -m 5          # Limit sites per type
+unlockegypt -o my_research.json      # Custom output path
+unlockegypt -v                       # Verbose logging
+unlockegypt --no-headless            # Show browser window
 
-# Research specific page type
-python research.py -t monuments
-python research.py -t museums
-
-# Limit sites per type (for testing)
-python research.py -t monuments -m 5
-
-# Custom output path
-python research.py -o my_research.json
-
-# Verbose logging
-python research.py -v
-
-# Show browser window (non-headless)
-python research.py --no-headless
+# Or run as module:
+python -m unlockegypt.cli
+python -m unlockegypt.cli -t monuments -m 5
 ```
 
 ## CLI Options
@@ -144,32 +137,32 @@ python research.py --no-headless
 
 ```
 UnlockEgyptParser/
-├── pyproject.toml          # Project config & dependencies
-├── config.yaml             # Runtime configuration
-├── research.py             # CLI entry point
-├── site_researcher.py      # Main orchestrator
+├── pyproject.toml              # Project config & dependencies
+├── config.yaml                 # Runtime configuration
+├── .pre-commit-config.yaml     # Code quality hooks
 │
-├── docs/                   # Documentation
-│   ├── PRD.md             # Product requirements
-│   ├── DESIGN.md          # System design
-│   └── TECH_STACK.md      # Technology stack
+├── src/unlockegypt/            # Main package (src layout)
+│   ├── __init__.py             # Package exports
+│   ├── cli.py                  # CLI entry point
+│   ├── site_researcher.py      # Main orchestrator
+│   ├── models/                 # Data models
+│   ├── researchers/            # Research components
+│   │   ├── wikipedia.py        # Wikipedia API + fuzzy search
+│   │   ├── governorate.py      # 27 governorate mapping
+│   │   ├── arabic_terms.py     # Vocabulary extraction
+│   │   ├── tips.py             # Visitor tips
+│   │   └── google_maps.py      # Practical info
+│   └── utils/                  # Utilities
+│       └── config.py           # Configuration loader
 │
-├── models/                 # Data models
-│   └── __init__.py        # Site, SubLocation, Tip, ArabicPhrase
+├── tests/                      # Test suite
+│   ├── conftest.py
+│   └── test_models.py
 │
-├── researchers/            # Research components
-│   ├── wikipedia.py       # Wikipedia API + fuzzy search
-│   ├── governorate.py     # 27 governorate mapping
-│   ├── arabic_terms.py    # Vocabulary extraction
-│   ├── tips.py            # Visitor tips
-│   └── google_maps.py     # Practical info
-│
-├── utils/                  # Utilities
-│   └── config.py          # Configuration loader
-│
-└── tests/                  # Test suite
-    ├── conftest.py
-    └── test_models.py
+└── docs/                       # Documentation
+    ├── PRD.md                  # Product requirements
+    ├── DESIGN.md               # System design
+    └── TECH_STACK.md           # Technology stack
 ```
 
 ## Development

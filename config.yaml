@@ -7,8 +7,8 @@
 
 # Application metadata
 app:
-  name: "UnlockEgypt Content Parser"
-  version: "3.2.0"
+  name: "UnlockEgypt Site Researcher"
+  version: "3.4.0"
   author: "UnlockEgypt Team"
 
 # Target website configuration
@@ -63,7 +63,7 @@ geography:
 # Geocoding service configuration
 geocoding:
   nominatim_url: "https://nominatim.openstreetmap.org/search"
-  user_agent: "UnlockEgyptParser/3.2 (educational project)"
+  user_agent: "UnlockEgyptParser/3.4 (educational project)"
 
 # Output configuration
 output:

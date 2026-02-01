@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unlockegypt-parser"
-version = "3.3.0"
+version = "3.4.0"
 description = "Multi-source research tool for Egyptian archaeological sites"
 readme = "README.md"
 license = {text = "MIT"}
@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Information Analysis",
 ]
 
@@ -47,18 +48,20 @@ dev = [
 ]
 
 [project.scripts]
-unlockegypt = "research:main"
+unlockegypt = "unlockegypt.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/Naareman/UnlockEgyptParser"
 Repository = "https://github.com/Naareman/UnlockEgyptParser"
 
+# =============================================================================
+# Setuptools - src layout configuration
+# =============================================================================
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["models*", "researchers*", "utils*"]
+where = ["src"]
 
 [tool.setuptools.package-data]
-"*" = ["py.typed", "*.yaml"]
+"unlockegypt" = ["py.typed"]
 
 # =============================================================================
 # Ruff - Linting and Formatting
@@ -66,6 +69,7 @@ include = ["models*", "researchers*", "utils*"]
 [tool.ruff]
 line-length = 88
 target-version = "py310"
+src = ["src"]
 exclude = [
     ".git",
     ".venv",
@@ -93,7 +97,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["models", "researchers", "utils"]
+known-first-party = ["unlockegypt"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -105,13 +109,13 @@ docstring-code-format = true
 # =============================================================================
 [tool.mypy]
 python_version = "3.10"
+strict = true
 warn_return_any = true
 warn_unused_ignores = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 check_untyped_defs = true
 strict_optional = true
-ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = [
@@ -133,13 +137,13 @@ addopts = [
     "--strict-markers",
 ]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = ["src"]
 
 # =============================================================================
 # Coverage - Test Coverage
 # =============================================================================
 [tool.coverage.run]
-source = ["models", "researchers", "utils", "site_researcher"]
+source = ["src/unlockegypt"]
 branch = true
 omit = [
     "*/tests/*",
@@ -154,3 +158,9 @@ exclude_lines = [
     "if __name__ == .__main__.:",
 ]
 show_missing = true
+
+# =============================================================================
+# Bandit - Security Linting
+# =============================================================================
+[tool.bandit]
+exclude_dirs = ["tests", "venv"]

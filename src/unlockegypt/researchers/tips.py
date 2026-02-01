@@ -10,13 +10,12 @@ Searches for:
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Optional
 from urllib.parse import quote as url_quote
 
 import requests
 from bs4 import BeautifulSoup
 
-from utils import config
+from unlockegypt.utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -39,7 +38,7 @@ class SiteTips:
     opening_hours: str = ""
     best_time_to_visit: str = ""
     estimated_duration: str = ""
-    ticket_info: Optional[TicketInfo] = None
+    ticket_info: TicketInfo | None = None
     official_website: str = ""
     accessibility_info: str = ""
 
@@ -176,7 +175,7 @@ class TipsResearcher:
 
         return tips[:8]  # Limit to 8 tips
 
-    def _search_ticket_info(self, site_name: str) -> Optional[TicketInfo]:
+    def _search_ticket_info(self, site_name: str) -> TicketInfo | None:
         """
         Search for official ticket information.
 
@@ -273,9 +272,7 @@ class TipsResearcher:
             return "2-3 hours"
         elif site_type == "pyramid":
             return "1-2 hours"
-        elif site_type == "tomb":
-            return "30 minutes - 1 hour"
-        elif site_type in ["mosque", "church"]:
+        elif site_type == "tomb" or site_type in ["mosque", "church"]:
             return "30 minutes - 1 hour"
         elif site_type == "fortress":
             return "1-2 hours"

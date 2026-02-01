@@ -7,13 +7,12 @@ governorate for any location in Egypt.
 
 import logging
 import time
-from typing import Optional
 from urllib.parse import quote as url_quote
 
 import requests
 from requests.exceptions import RequestException
 
-from utils import config
+from unlockegypt.utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -126,9 +125,9 @@ class GovernorateService:
         cls,
         place_name: str,
         location_hint: str = "",
-        lat: Optional[float] = None,
-        lon: Optional[float] = None
-    ) -> Optional[str]:
+        lat: float | None = None,
+        lon: float | None = None
+    ) -> str | None:
         """
         Determine the governorate for a place in Egypt.
 
@@ -174,7 +173,7 @@ class GovernorateService:
         return result
 
     @classmethod
-    def _geocode_to_governorate(cls, place_name: str, location_hint: str = "") -> Optional[str]:
+    def _geocode_to_governorate(cls, place_name: str, location_hint: str = "") -> str | None:
         """
         Use Nominatim to geocode a place and extract its governorate.
 
@@ -225,7 +224,7 @@ class GovernorateService:
         return None
 
     @classmethod
-    def _reverse_geocode_to_governorate(cls, lat: float, lon: float) -> Optional[str]:
+    def _reverse_geocode_to_governorate(cls, lat: float, lon: float) -> str | None:
         """
         Reverse geocode coordinates to find the governorate.
 

@@ -9,19 +9,19 @@ Uses web scraping to get:
 - Contact information
 """
 
+import contextlib
 import logging
 import re
 import time
 from dataclasses import dataclass, field
-from typing import Optional
 from urllib.parse import quote as url_quote
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 
-from utils import config
+from unlockegypt.utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -33,10 +33,10 @@ class GoogleMapsData:
     address: str = ""
     opening_hours: dict[str, str] = field(default_factory=dict)
     opening_hours_text: str = ""
-    rating: Optional[float] = None
-    review_count: Optional[int] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    rating: float | None = None
+    review_count: int | None = None
+    latitude: float | None = None
+    longitude: float | None = None
     phone: str = ""
     website: str = ""
     place_type: str = ""
@@ -52,7 +52,7 @@ class GoogleMapsResearcher:
 
     GOOGLE_MAPS_URL = "https://www.google.com/maps/search/"
 
-    def __init__(self, driver: Optional[webdriver.Chrome] = None):
+    def __init__(self, driver: webdriver.Chrome | None = None):
         """
         Initialize the Google Maps researcher.
 
@@ -75,16 +75,14 @@ class GoogleMapsResearcher:
             self._driver = webdriver.Chrome(options=options)
         return self._driver
 
-    def close(self):
+    def close(self) -> None:
         """Close the WebDriver if we own it."""
         if self._owns_driver and self._driver:
-            try:
+            with contextlib.suppress(Exception):
                 self._driver.quit()
-            except Exception:
-                pass
             self._driver = None
 
-    def research(self, site_name: str, location: str = "Egypt") -> Optional[GoogleMapsData]:
+    def research(self, site_name: str, location: str = "Egypt") -> GoogleMapsData | None:
         """
         Research a site on Google Maps.
 

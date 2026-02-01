@@ -16,7 +16,7 @@ import argparse
 import logging
 import os
 
-from site_researcher import SiteResearcher, PageType
+from unlockegypt.site_researcher import PageType, SiteResearcher
 
 
 def setup_logging(verbose: bool = False) -> None:
@@ -94,13 +94,13 @@ Examples:
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     args = parse_arguments()
     setup_logging(args.verbose)
 
     print("=" * 70)
-    print("UnlockEgypt Site Researcher v3.2")
+    print("UnlockEgypt Site Researcher v3.4")
     print("Research-Oriented Multi-Source Data Collection")
     print("=" * 70)
     print()

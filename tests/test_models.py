@@ -1,9 +1,8 @@
 """Tests for data models."""
 
-import pytest
 from dataclasses import asdict
 
-from models import Site, SubLocation, Tip, ArabicPhrase
+from unlockegypt.models import ArabicPhrase, Site, SubLocation, Tip
 
 
 class TestArabicPhrase:

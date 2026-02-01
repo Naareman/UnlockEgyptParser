@@ -10,12 +10,11 @@ Researches each site on both English and Arabic Wikipedia to:
 import logging
 import re
 from dataclasses import dataclass
-from typing import Optional
 
 import requests
 import wikipediaapi
 
-from utils import config
+from unlockegypt.utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -82,7 +81,7 @@ class WikipediaResearcher:
             re.IGNORECASE
         )
 
-    def research(self, site_name: str, location: str = "") -> Optional[WikipediaData]:
+    def research(self, site_name: str, location: str = "") -> WikipediaData | None:
         """
         Research a site on Wikipedia.
 
@@ -152,7 +151,7 @@ class WikipediaResearcher:
             architectural_features=architectural_features
         )
 
-    def _search_wikipedia(self, site_name: str, location: str = "") -> Optional[wikipediaapi.WikipediaPage]:
+    def _search_wikipedia(self, site_name: str, location: str = "") -> wikipediaapi.WikipediaPage | None:
         """
         Use Wikipedia search API to find articles with fuzzy matching.
 
@@ -275,7 +274,7 @@ class WikipediaResearcher:
         text = re.sub(r'\s+', ' ', text).strip()
         return text
 
-    def _extract_unique_facts(self, text: str, site_name: str) -> list[str]:
+    def _extract_unique_facts(self, text: str, _site_name: str) -> list[str]:
         """
         Extract unique, interesting facts about the site.
 
