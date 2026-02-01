@@ -7,11 +7,13 @@ governorate for any location in Egypt.
 
 import logging
 import time
-from typing import Optional, Tuple
+from typing import Optional
 from urllib.parse import quote as url_quote
 
 import requests
 from requests.exceptions import RequestException
+
+from utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -119,11 +121,6 @@ class GovernorateService:
     # Cache for geocoded results
     _cache: dict = {}
 
-    # Nominatim configuration
-    NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-    USER_AGENT = "UnlockEgyptParser/3.2 (educational research project)"
-    RATE_LIMIT = 1.0  # seconds between requests
-
     @classmethod
     def get_governorate(
         cls,
@@ -193,12 +190,15 @@ class GovernorateService:
             f"{place_name}, Egypt"
         ]
 
+        nominatim_url = config.get("geocoding", "nominatim_url",
+                                   default="https://nominatim.openstreetmap.org/search")
+
         for query in queries:
             try:
-                url = f"{cls.NOMINATIM_URL}?q={url_quote(query)}&format=json&addressdetails=1&limit=1"
-                headers = {"User-Agent": cls.USER_AGENT}
+                url = f"{nominatim_url}?q={url_quote(query)}&format=json&addressdetails=1&limit=1"
+                headers = {"User-Agent": config.nominatim_user_agent}
 
-                response = requests.get(url, headers=headers, timeout=15)
+                response = requests.get(url, headers=headers, timeout=config.http_timeout)
                 response.raise_for_status()
 
                 results = response.json()
@@ -217,7 +217,7 @@ class GovernorateService:
                                 return cls.GOVERNORATES[state_name]
 
                 # Rate limit compliance
-                time.sleep(cls.RATE_LIMIT)
+                time.sleep(config.geocoding_rate_limit)
 
             except RequestException as e:
                 logger.warning(f"Geocoding failed for '{query}': {e}")
@@ -238,9 +238,9 @@ class GovernorateService:
         """
         try:
             url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&addressdetails=1"
-            headers = {"User-Agent": cls.USER_AGENT}
+            headers = {"User-Agent": config.nominatim_user_agent}
 
-            response = requests.get(url, headers=headers, timeout=15)
+            response = requests.get(url, headers=headers, timeout=config.http_timeout)
             response.raise_for_status()
 
             result = response.json()
@@ -254,7 +254,7 @@ class GovernorateService:
                     if state_name in cls.GOVERNORATES:
                         return cls.GOVERNORATES[state_name]
 
-            time.sleep(cls.RATE_LIMIT)
+            time.sleep(config.geocoding_rate_limit)
 
         except RequestException as e:
             logger.warning(f"Reverse geocoding failed: {e}")
@@ -270,3 +270,8 @@ class GovernorateService:
     def get_all_governorates(cls) -> list[str]:
         """Get list of all 27 Egyptian governorates."""
         return sorted(set(cls.GOVERNORATES.values()))
+
+    @classmethod
+    def clear_cache(cls) -> None:
+        """Clear the geocoding cache to free memory."""
+        cls._cache.clear()

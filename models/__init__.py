@@ -1,12 +1,14 @@
 """
 Data models for UnlockEgypt Parser.
+
+Using slots=True for memory efficiency (Python 3.10+).
 """
 
 from dataclasses import dataclass, field
 from typing import Optional
 
 
-@dataclass
+@dataclass(slots=True)
 class ArabicPhrase:
     """Arabic vocabulary phrase for a site."""
     siteId: str
@@ -15,14 +17,14 @@ class ArabicPhrase:
     pronunciation: str
 
 
-@dataclass
+@dataclass(slots=True)
 class Tip:
     """Visitor tip for a site."""
     siteId: str
     tip: str
 
 
-@dataclass
+@dataclass(slots=True)
 class SubLocation:
     """Sub-location within a site."""
     id: str
@@ -43,7 +45,7 @@ class Site:
     era: str
     tourismType: str
     placeType: str
-    governorate: str  # Changed from 'city' to 'governorate'
+    governorate: str
     latitude: Optional[float]
     longitude: Optional[float]
     shortDescription: str

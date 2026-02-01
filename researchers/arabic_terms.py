@@ -8,7 +8,6 @@ and translates them to Arabic with pronunciation guides.
 import logging
 import re
 from dataclasses import dataclass
-from typing import Optional
 
 from deep_translator import GoogleTranslator
 
@@ -280,3 +279,7 @@ class ArabicTermExtractor:
             ))
 
         return arabic_terms
+
+    def clear_cache(self) -> None:
+        """Clear the translation cache to free memory."""
+        self._translation_cache.clear()

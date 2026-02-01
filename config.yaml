@@ -71,33 +71,6 @@ output:
   indent: 2
   ensure_ascii: false
 
-# City name normalization mapping
-# Maps various spellings/names to standardized city names
-city_mapping:
-  alexandria: "Alexandria"
-  cairo: "Cairo"
-  giza: "Giza"
-  luxor: "Luxor"
-  aswan: "Aswan"
-  sinai: "Sinai"
-  south sinai: "Sinai"
-  fayoum: "Fayoum"
-  el fayoum: "Fayoum"
-  al-minya: "Cairo"
-  minya: "Cairo"
-  sohag: "Luxor"
-  qena: "Luxor"
-  beni suef: "Cairo"
-  kafr el-sheikh: "Alexandria"
-  red sea: "Hurghada"
-  hurghada: "Hurghada"
-  sharm: "Sharm El Sheikh"
-  dahab: "Dahab"
-  matrouh: "Alexandria"
-  port said: "Cairo"
-  ismailia: "Cairo"
-  al-sharkia: "Sinai"
-
 # Historical era detection keywords
 era_keywords:
   Pre-Dynastic:

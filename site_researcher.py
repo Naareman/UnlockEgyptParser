@@ -13,27 +13,29 @@ treating this as a research exercise rather than simple web scraping.
 
 import json
 import logging
-import time
 import re
+import time
 from dataclasses import asdict
-from pathlib import Path
 from typing import Optional
+from urllib.parse import quote as url_quote
 
+import requests
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     NoSuchElementException,
     StaleElementReferenceException,
-    WebDriverException
+    WebDriverException,
 )
 
 from models import Site, SubLocation, Tip, ArabicPhrase
-from researchers.governorate import GovernorateService
-from researchers.wikipedia import WikipediaResearcher
-from researchers.google_maps import GoogleMapsResearcher
 from researchers.arabic_terms import ArabicTermExtractor
+from researchers.google_maps import GoogleMapsResearcher
+from researchers.governorate import GovernorateService
 from researchers.tips import TipsResearcher
+from researchers.wikipedia import WikipediaResearcher
+from utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -72,16 +74,15 @@ class SiteResearcher:
     6. Synthesizes into comprehensive site data
     """
 
-    BASE_URL = "https://egymonuments.gov.eg"
-
-    def __init__(self, headless: bool = True):
+    def __init__(self, headless: bool = None):
         """
         Initialize the site researcher.
 
         Args:
-            headless: Whether to run browser in headless mode
+            headless: Whether to run browser in headless mode (None = use config)
         """
-        self.headless = headless
+        self.headless = headless if headless is not None else config.headless
+        self.base_url = config.base_url
         self.driver: Optional[webdriver.Chrome] = None
         self.sites: list[Site] = []
         self.site_counter = 0
@@ -111,17 +112,18 @@ class SiteResearcher:
                 options.add_argument("--headless")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--window-size=1920,1080")
+            width, height = config.window_size
+            options.add_argument(f"--window-size={width},{height}")
             options.add_argument("--disable-gpu")
             options.add_argument("--lang=en")
             self.driver = webdriver.Chrome(options=options)
-            self.driver.implicitly_wait(10)
+            self.driver.implicitly_wait(config.implicit_wait)
 
-            # Share driver with Google Maps researcher
-            self.google_maps_researcher = GoogleMapsResearcher(driver=None)  # Will create own
+            # Google Maps researcher creates its own driver
+            self.google_maps_researcher = GoogleMapsResearcher(driver=None)
 
     def close(self):
-        """Close all resources."""
+        """Close all resources and clear caches."""
         if self.driver:
             try:
                 self.driver.quit()
@@ -131,6 +133,10 @@ class SiteResearcher:
 
         if self.google_maps_researcher:
             self.google_maps_researcher.close()
+
+        # Clear caches to free memory
+        self.governorate_service.clear_cache()
+        self.arabic_extractor.clear_cache()
 
     def get_site_links(
         self,
@@ -147,11 +153,11 @@ class SiteResearcher:
         Returns:
             List of site info dictionaries
         """
-        listing_url = f"{self.BASE_URL}/en/{page_type}/"
+        listing_url = f"{self.base_url}/en/{page_type}/"
         logger.info(f"Loading {PageType.get_display_name(page_type)} page: {listing_url}")
 
         self.driver.get(listing_url)
-        time.sleep(5)
+        time.sleep(config.page_load_wait)
 
         # Load all sites using scroll + "Show More" button
         max_iterations = 20 if not max_sites else 5
@@ -161,7 +167,7 @@ class SiteResearcher:
         while iteration < max_iterations:
             # Scroll to bottom
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
+            time.sleep(config.scroll_wait)
 
             items = self.driver.find_elements(By.CSS_SELECTOR, "a.listItem")
             current_count = len(items)
@@ -184,7 +190,7 @@ class SiteResearcher:
                             time.sleep(0.5)
                             btn.click()
                             logger.debug("Clicked 'Show More' button")
-                            time.sleep(3)
+                            time.sleep(config.show_more_wait)
                             clicked = True
                             break
                     except (StaleElementReferenceException, NoSuchElementException):
@@ -399,13 +405,11 @@ class SiteResearcher:
             data["place_type"] = self._determine_place_type(data["name"], full_text)
 
             # Get coordinates via Nominatim
-            from urllib.parse import quote as url_quote
-            import requests
-
             try:
                 query = f"{data['name']}, Egypt"
                 nom_url = f"https://nominatim.openstreetmap.org/search?q={url_quote(query)}&format=json&limit=1"
-                response = requests.get(nom_url, headers={"User-Agent": "UnlockEgyptParser/3.2"}, timeout=10)
+                headers = {"User-Agent": config.nominatim_user_agent}
+                response = requests.get(nom_url, headers=headers, timeout=config.http_timeout)
                 results = response.json()
                 if results:
                     data["latitude"] = float(results[0]["lat"])

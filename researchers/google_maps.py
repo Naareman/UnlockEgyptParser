@@ -16,13 +16,12 @@ from dataclasses import dataclass, field
 from typing import Optional
 from urllib.parse import quote as url_quote
 
-from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+
+from utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -70,7 +69,8 @@ class GoogleMapsResearcher:
             options.add_argument("--headless")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--window-size=1920,1080")
+            width, height = config.window_size
+            options.add_argument(f"--window-size={width},{height}")
             options.add_argument("--lang=en")
             self._driver = webdriver.Chrome(options=options)
         return self._driver
@@ -105,7 +105,7 @@ class GoogleMapsResearcher:
             driver.get(search_url)
 
             # Wait for results to load
-            time.sleep(3)
+            time.sleep(config.show_more_wait)
 
             data = GoogleMapsData()
             data.name = site_name
@@ -187,7 +187,7 @@ class GoogleMapsResearcher:
                 try:
                     elem = driver.find_element(By.CSS_SELECTOR, selector)
                     elem.click()
-                    time.sleep(1)
+                    time.sleep(config.geocoding_rate_limit)  # Short wait for UI
                     break
                 except (NoSuchElementException, Exception):
                     continue

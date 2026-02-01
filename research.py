@@ -15,12 +15,11 @@ Usage:
 import argparse
 import logging
 import os
-import sys
 
 from site_researcher import SiteResearcher, PageType
 
 
-def setup_logging(verbose: bool = False) -> logging.Logger:
+def setup_logging(verbose: bool = False) -> None:
     """Configure logging."""
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
@@ -28,7 +27,6 @@ def setup_logging(verbose: bool = False) -> logging.Logger:
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
-    return logging.getLogger('UnlockEgyptParser')
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -99,7 +97,7 @@ Examples:
 def main():
     """Main entry point."""
     args = parse_arguments()
-    logger = setup_logging(args.verbose)
+    setup_logging(args.verbose)
 
     print("=" * 70)
     print("UnlockEgypt Site Researcher v3.2")

@@ -12,7 +12,10 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
+import requests
 import wikipediaapi
+
+from utils import config
 
 logger = logging.getLogger('UnlockEgyptParser')
 
@@ -43,12 +46,13 @@ class WikipediaResearcher:
 
     def __init__(self):
         """Initialize Wikipedia API clients for English and Arabic."""
+        user_agent = config.nominatim_user_agent  # Reuse the same educational user agent
         self.wiki_en = wikipediaapi.Wikipedia(
-            user_agent='UnlockEgyptParser/3.2 (educational research project)',
+            user_agent=user_agent,
             language='en'
         )
         self.wiki_ar = wikipediaapi.Wikipedia(
-            user_agent='UnlockEgyptParser/3.2 (educational research project)',
+            user_agent=user_agent,
             language='ar'
         )
 
@@ -162,8 +166,6 @@ class WikipediaResearcher:
         Returns:
             WikipediaPage if found, None otherwise
         """
-        import requests
-
         search_queries = [
             f"{site_name} Egypt",
             site_name,
@@ -185,9 +187,10 @@ class WikipediaResearcher:
                     "srlimit": 5,  # Get top 5 results
                     "srprop": "snippet"
                 }
-                headers = {"User-Agent": "UnlockEgyptParser/3.2 (educational research project)"}
+                headers = {"User-Agent": config.nominatim_user_agent}
 
-                response = requests.get(search_url, params=params, headers=headers, timeout=10)
+                response = requests.get(search_url, params=params, headers=headers,
+                                       timeout=config.http_timeout)
                 response.raise_for_status()
                 data = response.json()
 

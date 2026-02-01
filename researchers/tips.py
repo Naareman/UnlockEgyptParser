@@ -16,6 +16,8 @@ from urllib.parse import quote as url_quote
 import requests
 from bs4 import BeautifulSoup
 
+from utils import config
+
 logger = logging.getLogger('UnlockEgyptParser')
 
 
@@ -58,13 +60,10 @@ class TipsResearcher:
         "egypt.travel",
     ]
 
-    # User agent for requests
-    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
-
     def __init__(self):
         """Initialize the tips researcher."""
         self.session = requests.Session()
-        self.session.headers.update({"User-Agent": self.USER_AGENT})
+        self.session.headers.update({"User-Agent": config.user_agent})
 
     def research(self, site_name: str, site_data: dict = None) -> SiteTips:
         """
@@ -195,7 +194,7 @@ class TipsResearcher:
         try:
             # Use a simple Google search scrape
             search_url = f"https://www.google.com/search?q={url_quote(search_query)}"
-            response = self.session.get(search_url, timeout=10)
+            response = self.session.get(search_url, timeout=config.http_timeout)
 
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'lxml')
