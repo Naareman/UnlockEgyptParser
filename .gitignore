@@ -23,3 +23,7 @@ detail_page.html
 # OS
 .DS_Store
 Thumbs.db
+
+# Output files
+parsed_sites.json
+researched_sites.json

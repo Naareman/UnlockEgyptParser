@@ -1,0 +1,374 @@
+# =============================================================================
+# UnlockEgypt Parser Configuration
+# =============================================================================
+# This file contains all configurable parameters for the parser.
+# Modify values here instead of changing the source code.
+# =============================================================================
+
+# Application metadata
+app:
+  name: "UnlockEgypt Content Parser"
+  version: "3.2.0"
+  author: "UnlockEgypt Team"
+
+# Target website configuration
+website:
+  base_url: "https://egymonuments.gov.eg"
+  allowed_domain: "egymonuments.gov.eg"
+  page_types:
+    - archaeological-sites
+    - monuments
+    - museums
+    - sunken-monuments
+
+# Browser/Selenium settings
+browser:
+  headless: true
+  window_width: 1920
+  window_height: 1080
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+
+# Timing configuration (in seconds)
+timing:
+  implicit_wait_timeout: 10
+  page_load_wait: 5
+  click_wait: 2
+  scroll_wait: 2
+  arabic_page_wait: 2
+  show_more_wait: 3
+  geocoding_rate_limit: 1
+  http_timeout: 15
+
+# Retry configuration
+retry:
+  max_retries: 3
+  initial_delay: 1.0
+  backoff_multiplier: 2.0
+
+# Content extraction thresholds
+content:
+  min_paragraph_length: 40
+  min_sentence_length: 30
+  max_sub_locations: 5
+  summary_char_limit: 200
+  max_load_iterations: 20
+
+# Geographic bounds for Egypt (for coordinate validation)
+geography:
+  egypt_lat_min: 21
+  egypt_lat_max: 32
+  egypt_lon_min: 24
+  egypt_lon_max: 37
+
+# Geocoding service configuration
+geocoding:
+  nominatim_url: "https://nominatim.openstreetmap.org/search"
+  user_agent: "UnlockEgyptParser/3.2 (educational project)"
+
+# Output configuration
+output:
+  default_filename: "parsed_sites.json"
+  indent: 2
+  ensure_ascii: false
+
+# City name normalization mapping
+# Maps various spellings/names to standardized city names
+city_mapping:
+  alexandria: "Alexandria"
+  cairo: "Cairo"
+  giza: "Giza"
+  luxor: "Luxor"
+  aswan: "Aswan"
+  sinai: "Sinai"
+  south sinai: "Sinai"
+  fayoum: "Fayoum"
+  el fayoum: "Fayoum"
+  al-minya: "Cairo"
+  minya: "Cairo"
+  sohag: "Luxor"
+  qena: "Luxor"
+  beni suef: "Cairo"
+  kafr el-sheikh: "Alexandria"
+  red sea: "Hurghada"
+  hurghada: "Hurghada"
+  sharm: "Sharm El Sheikh"
+  dahab: "Dahab"
+  matrouh: "Alexandria"
+  port said: "Cairo"
+  ismailia: "Cairo"
+  al-sharkia: "Sinai"
+
+# Historical era detection keywords
+era_keywords:
+  Pre-Dynastic:
+    - predynastic
+    - pre-dynastic
+  Old Kingdom:
+    - old kingdom
+    - early dynastic
+  Middle Kingdom:
+    - middle kingdom
+  New Kingdom:
+    - new kingdom
+    - 18th dynasty
+    - 19th dynasty
+    - 20th dynasty
+  Late Period:
+    - late period
+  Ptolemaic:
+    - ptolemaic
+    - ptolemy
+    - greek
+    - hellenistic
+  Roman:
+    - roman
+    - byzantine
+    - coptic
+  Islamic:
+    - islamic
+    - fatimid
+    - mamluk
+    - ayyubid
+    - ottoman
+  Modern:
+    - muhammad ali
+    - modern
+    - 19th century
+    - 20th century
+
+# Valid classification values
+classifications:
+  eras:
+    - Pre-Dynastic
+    - Old Kingdom
+    - Middle Kingdom
+    - New Kingdom
+    - Late Period
+    - Ptolemaic
+    - Roman
+    - Islamic
+    - Modern
+  tourism_types:
+    - Pharaonic
+    - Greco-Roman
+    - Coptic
+    - Islamic
+    - Modern
+  place_types:
+    - Pyramid
+    - Temple
+    - Tomb
+    - Museum
+    - Mosque
+    - Church
+    - Fortress
+    - Market
+    - Monument
+    - Ruins
+
+# Place type detection keywords
+place_keywords:
+  Pyramid:
+    - pyramid
+  Temple:
+    - temple
+  Tomb:
+    - tomb
+    - cemetery
+    - necropolis
+    - burial
+  Museum:
+    - museum
+  Mosque:
+    - mosque
+    - madrasa
+  Church:
+    - church
+    - cathedral
+    - monastery
+    - convent
+  Fortress:
+    - fortress
+    - citadel
+    - fort
+    - castle
+  Market:
+    - market
+    - bazaar
+    - khan
+  Monument:
+    - amphitheatre
+    - theater
+    - theatre
+    - obelisk
+    - statue
+    - colossus
+
+# City-specific visitor tips
+city_tips:
+  Alexandria: "Bring sunscreen and a hat - the Mediterranean sun can be intense."
+  Cairo: "Start early to avoid crowds and the midday heat."
+  Giza: "Hire an official guide at the entrance for the best experience."
+  Luxor: "Consider visiting early morning or late afternoon to avoid peak heat."
+  Aswan: "Carry plenty of water, especially during summer months."
+
+# Arabic vocabulary phrases by place type
+arabic_phrases:
+  Temple:
+    - english: "Temple"
+      arabic: "معبد"
+      pronunciation: "Ma'bad"
+    - english: "Pharaoh"
+      arabic: "فرعون"
+      pronunciation: "Fir'awn"
+    - english: "God/Goddess"
+      arabic: "إله/إلهة"
+      pronunciation: "Ilah/Ilaha"
+    - english: "Columns"
+      arabic: "أعمدة"
+      pronunciation: "A'mida"
+    - english: "Hieroglyphics"
+      arabic: "هيروغليفية"
+      pronunciation: "Hieroglyphia"
+  Pyramid:
+    - english: "Pyramid"
+      arabic: "هرم"
+      pronunciation: "Haram"
+    - english: "King"
+      arabic: "ملك"
+      pronunciation: "Malik"
+    - english: "Chamber"
+      arabic: "غرفة"
+      pronunciation: "Ghorfa"
+    - english: "Stone"
+      arabic: "حجر"
+      pronunciation: "Hagar"
+  Tomb:
+    - english: "Tomb"
+      arabic: "مقبرة"
+      pronunciation: "Maqbara"
+    - english: "Mummy"
+      arabic: "مومياء"
+      pronunciation: "Mumya"
+    - english: "Coffin"
+      arabic: "تابوت"
+      pronunciation: "Taboot"
+    - english: "Noble"
+      arabic: "نبيل"
+      pronunciation: "Nabeel"
+    - english: "Cemetery"
+      arabic: "جبانة"
+      pronunciation: "Gabbana"
+  Mosque:
+    - english: "Mosque"
+      arabic: "مسجد"
+      pronunciation: "Masgid"
+    - english: "Minaret"
+      arabic: "مئذنة"
+      pronunciation: "Me'zana"
+    - english: "Dome"
+      arabic: "قبة"
+      pronunciation: "Qobba"
+    - english: "Prayer"
+      arabic: "صلاة"
+      pronunciation: "Salah"
+  Museum:
+    - english: "Museum"
+      arabic: "متحف"
+      pronunciation: "Mat-haf"
+    - english: "Artifact"
+      arabic: "أثر"
+      pronunciation: "Athar"
+    - english: "Statue"
+      arabic: "تمثال"
+      pronunciation: "Timthal"
+    - english: "Collection"
+      arabic: "مجموعة"
+      pronunciation: "Magmoo'a"
+    - english: "Display"
+      arabic: "عرض"
+      pronunciation: "Ard"
+  Monument:
+    - english: "Monument"
+      arabic: "نصب تذكاري"
+      pronunciation: "Nasb Tizkari"
+    - english: "Amphitheatre"
+      arabic: "مدرج"
+      pronunciation: "Mudarrag"
+    - english: "Theater"
+      arabic: "مسرح"
+      pronunciation: "Masrah"
+    - english: "Roman"
+      arabic: "روماني"
+      pronunciation: "Romani"
+    - english: "Mosaic"
+      arabic: "فسيفساء"
+      pronunciation: "Fusayfisa'"
+  Ruins:
+    - english: "Ruins"
+      arabic: "آثار"
+      pronunciation: "Athar"
+    - english: "Ancient"
+      arabic: "قديم"
+      pronunciation: "Adeem"
+    - english: "Excavation"
+      arabic: "حفريات"
+      pronunciation: "Hafriyat"
+    - english: "Archaeology"
+      arabic: "علم الآثار"
+      pronunciation: "Ilm al-Athar"
+  Fortress:
+    - english: "Fortress"
+      arabic: "قلعة"
+      pronunciation: "Qal'a"
+    - english: "Tower"
+      arabic: "برج"
+      pronunciation: "Borg"
+    - english: "Wall"
+      arabic: "سور"
+      pronunciation: "Soor"
+    - english: "Gate"
+      arabic: "بوابة"
+      pronunciation: "Bawwaba"
+  Church:
+    - english: "Church"
+      arabic: "كنيسة"
+      pronunciation: "Kaneesa"
+    - english: "Coptic"
+      arabic: "قبطي"
+      pronunciation: "Qibti"
+    - english: "Monastery"
+      arabic: "دير"
+      pronunciation: "Deir"
+    - english: "Icon"
+      arabic: "أيقونة"
+      pronunciation: "Ayqoona"
+
+# CSS selectors for web scraping
+selectors:
+  list_item: "a.listItem"
+  show_more_button: '[class*="showMore"], .showMoreBtn'
+  location: ".location p"
+  description: ".details > p"
+  title: "h1, .title h1, .pageTitle"
+  gallery_images: ".gallery img, .slider img, .monumentGallery img, article img, .swiper-slide img"
+
+# Content filtering patterns
+content_filters:
+  footer_indicators:
+    - copyright
+    - developed by
+    - all rights reserved
+    - ministry of
+  navigation_indicators:
+    - read more
+    - click here
+    - show more
+    - back to
+    - home >
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"

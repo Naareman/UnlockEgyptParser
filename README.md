@@ -2,30 +2,26 @@
 
 A production-quality Python parser that scrapes site information from [egymonuments.gov.eg](https://egymonuments.gov.eg) for the UnlockEgypt iOS app.
 
-## Version 3.1
+## Version 3.2
 
-Supports all 4 page types from egymonuments.gov.eg:
-- **Archaeological Sites** - Ancient archaeological sites
-- **Monuments** - Historical monuments
-- **Museums** - Museums across Egypt
-- **Sunken Monuments** - Underwater archaeological sites
+**New in this version:**
+- **External Configuration**: All settings moved to `config.yaml` - no more hardcoded values
+- **Improved Pagination**: Proper handling of infinite scroll + "Show More" button pattern
+- **Full Site Coverage**: Now loads all sites from each page type (189 total across all categories)
 
-## Version 3.0
-
-This version includes a complete architectural refactoring with:
-
-- **Modular Architecture**: Separated into focused components (WebScraper, ContentExtractor, GeocodingService, etc.)
-- **Proper Logging**: Replaced print statements with Python's logging module
-- **Security Features**: URL validation, content sanitization, input validation
-- **Retry Logic**: Automatic retries with exponential backoff for network operations
-- **Context Manager Support**: Proper resource cleanup with `with` statement
-- **CLI Interface**: Command-line arguments for configuration
-- **Type Hints**: Full type annotations throughout
-- **Comprehensive Docstrings**: All public methods documented
+### Site Counts by Category
+| Page Type | Sites |
+|-----------|-------|
+| Archaeological Sites | 34 |
+| Monuments | 123 |
+| Museums | 24 |
+| Sunken Monuments | 8 |
+| **Total** | **189** |
 
 ## Architecture
 
 ```
+ConfigLoader              - Loads external YAML configuration
 EgyMonumentsParser (Facade)
     ├── WebScraper           - Browser operations with Selenium
     ├── ContentExtractor     - HTML content extraction & sanitization
@@ -46,20 +42,44 @@ EgyMonumentsParser (Facade)
 - Extracts opening hours and ticket prices
 - Generates site-specific tips and Arabic vocabulary phrases
 
-## Output Format
+## Configuration
 
-The parser generates a JSON file with:
-- **sites** - Main site data
-- **subLocations** - Sub-locations for each site
-- **cards** - Card placeholders with full descriptions
-- **tips** - Practical tips for visitors
-- **arabicPhrases** - Site-specific Arabic vocabulary
+All settings are stored in `config.yaml`. Key sections:
+
+```yaml
+# Timing settings
+timing:
+  implicit_wait_timeout: 10
+  page_load_wait: 5
+  scroll_wait: 2
+
+# Content extraction
+content:
+  min_paragraph_length: 40
+  max_sub_locations: 5
+
+# City name mappings
+city_mapping:
+  alexandria: "Alexandria"
+  cairo: "Cairo"
+  # ... add custom mappings
+
+# Arabic phrases by place type
+arabic_phrases:
+  Temple:
+    - english: "Temple"
+      arabic: "معبد"
+      pronunciation: "Ma'bad"
+```
+
+**To customize behavior**, edit `config.yaml` instead of modifying source code.
 
 ## Requirements
 
 ```
-selenium
-requests
+selenium>=4.0.0
+requests>=2.25.0
+PyYAML>=6.0
 ```
 
 ## Installation
@@ -70,13 +90,13 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Install dependencies
-pip install selenium requests
+pip install -r requirements.txt
 ```
 
 ## Usage
 
 ```bash
-# Parse all page types (default)
+# Parse all page types (default) - 189 sites
 python parser.py
 
 # Parse specific page type
@@ -114,12 +134,21 @@ python parser.py -t monuments -t museums -m 5 -v -o test.json
 
 ## Page Types
 
-| Type | Description |
-|------|-------------|
-| `archaeological-sites` | Ancient archaeological sites |
-| `monuments` | Historical monuments (temples, etc.) |
-| `museums` | Museums across Egypt |
-| `sunken-monuments` | Underwater archaeological sites |
+| Type | Description | Sites |
+|------|-------------|-------|
+| `archaeological-sites` | Ancient archaeological sites | 34 |
+| `monuments` | Historical monuments (temples, etc.) | 123 |
+| `museums` | Museums across Egypt | 24 |
+| `sunken-monuments` | Underwater archaeological sites | 8 |
+
+## Output Format
+
+The parser generates a JSON file with:
+- **sites** - Main site data
+- **subLocations** - Sub-locations for each site
+- **cards** - Card placeholders with full descriptions
+- **tips** - Practical tips for visitors
+- **arabicPhrases** - Site-specific Arabic vocabulary
 
 ## Programmatic Usage
 
@@ -144,6 +173,7 @@ finally:
 
 This codebase follows best practices:
 
+- **External Configuration**: All settings in `config.yaml`
 - **SOLID Principles**: Single responsibility, dependency injection
 - **PEP 8**: Python style guide compliance
 - **Type Safety**: Full type annotations
@@ -151,6 +181,18 @@ This codebase follows best practices:
 - **Security**: URL validation, content sanitization
 - **Testability**: Dependency injection for mocking
 - **Documentation**: Comprehensive docstrings
+
+## Project Structure
+
+```
+UnlockEgyptParser/
+├── parser.py           # Main parser code
+├── config.yaml         # External configuration
+├── requirements.txt    # Python dependencies
+├── README.md          # This file
+├── parsed_sites.json  # Output (generated)
+└── venv/              # Virtual environment
+```
 
 ## Related
 
