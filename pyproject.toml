@@ -1,0 +1,156 @@
+[build-system]
+requires = ["setuptools>=68", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unlockegypt-parser"
+version = "3.3.0"
+description = "Multi-source research tool for Egyptian archaeological sites"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "UnlockEgypt Team"}
+]
+keywords = ["egypt", "archaeology", "research", "scraping", "wikipedia"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+dependencies = [
+    "selenium>=4.0.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.0",
+    "requests>=2.25.0",
+    "PyYAML>=6.0",
+    "deep-translator>=1.11.0",
+    "wikipedia-api>=0.6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "pre-commit>=3.0",
+    "types-requests>=2.28",
+    "types-PyYAML>=6.0",
+    "types-beautifulsoup4>=4.12",
+]
+
+[project.scripts]
+unlockegypt = "research:main"
+
+[project.urls]
+Homepage = "https://github.com/Naareman/UnlockEgyptParser"
+Repository = "https://github.com/Naareman/UnlockEgyptParser"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["models*", "researchers*", "utils*"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed", "*.yaml"]
+
+# =============================================================================
+# Ruff - Linting and Formatting
+# =============================================================================
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # function call in default argument
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["models", "researchers", "utils"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
+# =============================================================================
+# MyPy - Type Checking
+# =============================================================================
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+strict_optional = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "selenium.*",
+    "bs4.*",
+    "wikipediaapi.*",
+    "deep_translator.*",
+]
+ignore_missing_imports = true
+
+# =============================================================================
+# Pytest - Testing
+# =============================================================================
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",
+    "-q",
+    "--strict-markers",
+]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+# =============================================================================
+# Coverage - Test Coverage
+# =============================================================================
+[tool.coverage.run]
+source = ["models", "researchers", "utils", "site_researcher"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+show_missing = true

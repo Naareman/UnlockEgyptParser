@@ -1,15 +1,25 @@
-# UnlockEgypt Parser
+# UnlockEgypt Site Researcher
 
-A production-quality Python parser that scrapes site information from [egymonuments.gov.eg](https://egymonuments.gov.eg) for the UnlockEgypt iOS app.
+A comprehensive research tool that gathers rich, multi-source information about Egyptian archaeological sites. Unlike simple web scrapers, it treats each site as a research subject, synthesizing data from multiple authoritative sources.
 
-## Version 3.2
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
-**New in this version:**
-- **External Configuration**: All settings moved to `config.yaml` - no more hardcoded values
-- **Improved Pagination**: Proper handling of infinite scroll + "Show More" button pattern
-- **Full Site Coverage**: Now loads all sites from each page type (189 total across all categories)
+## Version 3.3
 
-### Site Counts by Category
+**Research-Oriented Multi-Source Architecture**
+
+| Feature | Description |
+|---------|-------------|
+| **Multi-Source Research** | Aggregates data from 4+ authoritative sources per site |
+| **Wikipedia Integration** | EN + AR Wikipedia with fuzzy search for name variations |
+| **27 Governorates** | Accurate mapping to all Egyptian governorates via Nominatim |
+| **Dynamic Arabic Content** | Site-specific vocabulary with translations & pronunciations |
+| **No API Keys Required** | All free, publicly accessible data sources |
+
+## Site Coverage
+
 | Page Type | Sites |
 |-----------|-------|
 | Archaeological Sites | 34 |
@@ -21,179 +31,215 @@ A production-quality Python parser that scrapes site information from [egymonume
 ## Architecture
 
 ```
-ConfigLoader              - Loads external YAML configuration
-EgyMonumentsParser (Facade)
-    ├── WebScraper           - Browser operations with Selenium
-    ├── ContentExtractor     - HTML content extraction & sanitization
-    ├── GeocodingService     - Coordinate lookups via Nominatim API
-    ├── ContentGenerator     - Tips, phrases, descriptions
-    ├── SubLocationExtractor - Sub-location pattern matching
-    ├── Classifier           - Era, tourism type, place type classification
-    └── DataExporter         - JSON export with validation
-```
-
-## Features
-
-- Scrapes site information including name, Arabic name, coordinates, era, and descriptions
-- Extracts meaningful sub-locations (temples, tombs, monuments, etc.)
-- Generates proper English descriptions for each sub-location
-- Fetches Arabic names from the Arabic version of pages
-- Gets GPS coordinates via OpenStreetMap Nominatim API
-- Extracts opening hours and ticket prices
-- Generates site-specific tips and Arabic vocabulary phrases
-
-## Configuration
-
-All settings are stored in `config.yaml`. Key sections:
-
-```yaml
-# Timing settings
-timing:
-  implicit_wait_timeout: 10
-  page_load_wait: 5
-  scroll_wait: 2
-
-# Content extraction
-content:
-  min_paragraph_length: 40
-  max_sub_locations: 5
-
-# City name mappings
-city_mapping:
-  alexandria: "Alexandria"
-  cairo: "Cairo"
-  # ... add custom mappings
-
-# Arabic phrases by place type
-arabic_phrases:
-  Temple:
-    - english: "Temple"
-      arabic: "معبد"
-      pronunciation: "Ma'bad"
-```
-
-**To customize behavior**, edit `config.yaml` instead of modifying source code.
-
-## Requirements
-
-```
-selenium>=4.0.0
-requests>=2.25.0
-PyYAML>=6.0
+┌─────────────────────────────────────────────────────────────────┐
+│                     Site Researcher (Orchestrator)              │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │
+        ┌─────────┬───────────┼───────────┬─────────┐
+        ▼         ▼           ▼           ▼         ▼
+   ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+   │Primary  │ │Wikipedia│ │Governorate│ │Arabic  │ │ Tips   │
+   │Source   │ │Research │ │Service  │ │Extractor│ │Research│
+   └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
+        │           │           │           │           │
+        ▼           ▼           ▼           ▼           ▼
+   egymonuments  Wikipedia   Nominatim   Google     Official
+   .gov.eg       EN + AR     Geocoding   Translate  Sources
 ```
 
 ## Installation
 
+### Using uv (Recommended)
+
+```bash
+# Clone repository
+git clone https://github.com/Naareman/UnlockEgyptParser.git
+cd UnlockEgyptParser
+
+# Install with uv
+uv sync
+
+# Run
+uv run python research.py
+```
+
+### Using pip
+
 ```bash
 # Create virtual environment
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Install in development mode
+pip install -e ".[dev]"
+
+# Run
+python research.py
 ```
 
 ## Usage
 
 ```bash
-# Parse all page types (default) - 189 sites
-python parser.py
+# Research all sites (189 total)
+python research.py
 
-# Parse specific page type
-python parser.py -t monuments
-python parser.py -t museums
-python parser.py -t archaeological-sites
-python parser.py -t sunken-monuments
+# Research specific page type
+python research.py -t monuments
+python research.py -t museums
 
-# Parse multiple page types
-python parser.py -t monuments -t museums
-
-# Parse first N sites per page type
-python parser.py -t monuments -m 3
+# Limit sites per type (for testing)
+python research.py -t monuments -m 5
 
 # Custom output path
-python parser.py -o custom_output.json
+python research.py -o my_research.json
 
-# Verbose logging (debug mode)
-python parser.py -v
+# Verbose logging
+python research.py -v
 
-# Combine options
-python parser.py -t monuments -t museums -m 5 -v -o test.json
+# Show browser window (non-headless)
+python research.py --no-headless
 ```
 
 ## CLI Options
 
 | Option | Description |
 |--------|-------------|
-| `-t, --type` | Page type(s) to parse (can be specified multiple times) |
-| `-o, --output` | Output JSON file path (default: parsed_sites.json) |
-| `-m, --max-sites` | Maximum number of sites per page type (default: all) |
-| `-v, --verbose` | Enable verbose (debug) logging |
+| `-t, --type` | Page type(s) to research (repeatable) |
+| `-o, --output` | Output JSON file path |
+| `-m, --max-sites` | Maximum sites per page type |
+| `-v, --verbose` | Enable debug logging |
 | `--no-headless` | Show browser window |
-| `--strict` | Enable strict validation |
-
-## Page Types
-
-| Type | Description | Sites |
-|------|-------------|-------|
-| `archaeological-sites` | Ancient archaeological sites | 34 |
-| `monuments` | Historical monuments (temples, etc.) | 123 |
-| `museums` | Museums across Egypt | 24 |
-| `sunken-monuments` | Underwater archaeological sites | 8 |
 
 ## Output Format
 
-The parser generates a JSON file with:
-- **sites** - Main site data
-- **subLocations** - Sub-locations for each site
-- **cards** - Card placeholders with full descriptions
-- **tips** - Practical tips for visitors
-- **arabicPhrases** - Site-specific Arabic vocabulary
-
-## Programmatic Usage
-
-```python
-from parser import EgyMonumentsParser
-
-# Using context manager (recommended)
-with EgyMonumentsParser(headless=True) as parser:
-    sites = parser.parse_sites(max_sites=10)
-    parser.export_to_json("output.json")
-
-# Manual cleanup
-parser = EgyMonumentsParser()
-try:
-    sites = parser.parse_sites()
-    parser.export_to_json("output.json")
-finally:
-    parser.close()
+```json
+{
+  "sites": [{
+    "id": "site_001",
+    "name": "Karnak Temple",
+    "arabicName": "معبد الكرنك",
+    "governorate": "Luxor",
+    "era": "New Kingdom",
+    "uniqueFacts": ["Largest ancient religious site..."],
+    "keyFigures": ["Ramesses II", "Amenhotep III"],
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Karnak"
+  }],
+  "subLocations": [...],
+  "cards": [...],
+  "tips": [...],
+  "arabicPhrases": [...]
+}
 ```
 
-## Code Quality
+## Data Sources
 
-This codebase follows best practices:
-
-- **External Configuration**: All settings in `config.yaml`
-- **SOLID Principles**: Single responsibility, dependency injection
-- **PEP 8**: Python style guide compliance
-- **Type Safety**: Full type annotations
-- **Error Handling**: Specific exceptions, no bare except clauses
-- **Security**: URL validation, content sanitization
-- **Testability**: Dependency injection for mocking
-- **Documentation**: Comprehensive docstrings
+| Source | Data Retrieved |
+|--------|---------------|
+| egymonuments.gov.eg | Primary info, images, Arabic names |
+| Wikipedia (EN/AR) | Historical facts, key figures, features |
+| Nominatim/OSM | Coordinates, governorate mapping |
+| Google Translate | Arabic vocabulary translations |
 
 ## Project Structure
 
 ```
 UnlockEgyptParser/
-├── parser.py           # Main parser code
-├── config.yaml         # External configuration
-├── requirements.txt    # Python dependencies
-├── README.md          # This file
-├── parsed_sites.json  # Output (generated)
-└── venv/              # Virtual environment
+├── pyproject.toml          # Project config & dependencies
+├── config.yaml             # Runtime configuration
+├── research.py             # CLI entry point
+├── site_researcher.py      # Main orchestrator
+│
+├── docs/                   # Documentation
+│   ├── PRD.md             # Product requirements
+│   ├── DESIGN.md          # System design
+│   └── TECH_STACK.md      # Technology stack
+│
+├── models/                 # Data models
+│   └── __init__.py        # Site, SubLocation, Tip, ArabicPhrase
+│
+├── researchers/            # Research components
+│   ├── wikipedia.py       # Wikipedia API + fuzzy search
+│   ├── governorate.py     # 27 governorate mapping
+│   ├── arabic_terms.py    # Vocabulary extraction
+│   ├── tips.py            # Visitor tips
+│   └── google_maps.py     # Practical info
+│
+├── utils/                  # Utilities
+│   └── config.py          # Configuration loader
+│
+└── tests/                  # Test suite
+    ├── conftest.py
+    └── test_models.py
 ```
+
+## Development
+
+### Setup
+
+```bash
+# Install with dev dependencies
+pip install -e ".[dev]"
+
+# Install pre-commit hooks
+pre-commit install
+```
+
+### Code Quality
+
+```bash
+# Run linter
+ruff check .
+
+# Run formatter
+ruff format .
+
+# Run type checker
+mypy .
+
+# Run tests
+pytest
+
+# Run tests with coverage
+pytest --cov=. --cov-report=html
+```
+
+### Pre-commit Hooks
+
+The project uses pre-commit hooks for:
+- Trailing whitespace removal
+- YAML/JSON validation
+- Ruff linting and formatting
+- MyPy type checking
+- Security checks (bandit)
+
+## Configuration
+
+All settings are in `config.yaml`:
+
+```yaml
+website:
+  base_url: "https://egymonuments.gov.eg"
+
+timing:
+  page_load_wait: 5
+  scroll_wait: 2
+  geocoding_rate_limit: 1
+
+browser:
+  headless: true
+  window_size: [1920, 1080]
+```
+
+## Documentation
+
+- [Product Requirements (PRD)](docs/PRD.md)
+- [System Design](docs/DESIGN.md)
+- [Tech Stack](docs/TECH_STACK.md)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## Related
 
-- [UnlockEgypt](https://github.com/Naareman/UnlockEgypt) - The iOS app that uses this data
+- [UnlockEgypt iOS App](https://github.com/Naareman/UnlockEgypt) - The mobile app that uses this data
