@@ -6,10 +6,10 @@ A research-oriented tool that gathers comprehensive information about
 Egyptian archaeological sites from multiple sources.
 
 Usage:
-    python research.py                          # Research all sites
-    python research.py -t monuments             # Research only monuments
-    python research.py -t museums -m 5          # Research first 5 museums
-    python research.py -v                       # Verbose output
+    unlockegypt                          # Research all sites
+    unlockegypt -t monuments             # Research only monuments
+    unlockegypt -t museums -m 5          # Research first 5 museums
+    unlockegypt -v                       # Verbose output
 """
 
 import argparse
@@ -50,11 +50,11 @@ Page Types:
   sunken-monuments     Underwater archaeological sites
 
 Examples:
-  python research.py                              # Research all sites
-  python research.py -t monuments                 # Research only monuments
-  python research.py -t museums -m 3              # Research first 3 museums
-  python research.py -o my_research.json          # Custom output path
-  python research.py -v                           # Verbose output
+  unlockegypt                              # Research all sites
+  unlockegypt -t monuments                 # Research only monuments
+  unlockegypt -t museums -m 3              # Research first 3 museums
+  unlockegypt -o my_research.json          # Custom output path
+  unlockegypt -v                           # Verbose output
         """
     )
 

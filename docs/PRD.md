@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD)
 ## UnlockEgypt Site Researcher
 
-**Version:** 3.3
+**Version:** 3.4
 **Last Updated:** 2026-02-01
 **Status:** Active Development
 

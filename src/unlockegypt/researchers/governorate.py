@@ -118,7 +118,7 @@ class GovernorateService:
     }
 
     # Cache for geocoded results
-    _cache: dict = {}
+    _cache: dict[str, str | None] = {}
 
     @classmethod
     def get_governorate(

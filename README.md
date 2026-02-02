@@ -60,7 +60,7 @@ cd UnlockEgyptParser
 uv sync
 
 # Run
-uv run python research.py
+uv run unlockegypt
 ```
 
 ### Using pip
@@ -74,7 +74,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -e ".[dev]"
 
 # Run
-python research.py
+unlockegypt
 ```
 
 ## Usage

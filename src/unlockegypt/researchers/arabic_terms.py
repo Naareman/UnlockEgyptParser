@@ -109,7 +109,7 @@ class ArabicTermExtractor:
         "mosque": "MOSK",
     }
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the translator."""
         self.translator = GoogleTranslator(source='en', target='ar')
         self._translation_cache: dict[str, str] = {}
@@ -197,7 +197,7 @@ class ArabicTermExtractor:
             return self._translation_cache[cache_key]
 
         try:
-            translation = self.translator.translate(text)
+            translation: str = self.translator.translate(text)
             self._translation_cache[cache_key] = translation
             return translation
         except Exception as e:

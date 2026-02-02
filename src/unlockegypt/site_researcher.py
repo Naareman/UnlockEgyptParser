@@ -17,6 +17,7 @@ import logging
 import re
 import time
 from dataclasses import asdict
+from typing import Any, Literal
 from urllib.parse import quote as url_quote
 
 import requests
@@ -74,7 +75,7 @@ class SiteResearcher:
     6. Synthesizes into comprehensive site data
     """
 
-    def __init__(self, headless: bool = None):
+    def __init__(self, headless: bool | None = None) -> None:
         """
         Initialize the site researcher.
 
@@ -94,17 +95,29 @@ class SiteResearcher:
         self.arabic_extractor = ArabicTermExtractor()
         self.tips_researcher = TipsResearcher()
 
-    def __enter__(self):
+    def __enter__(self) -> "SiteResearcher":
         """Context manager entry."""
         self._init_driver()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: Any,
+    ) -> Literal[False]:
         """Context manager exit with cleanup."""
         self.close()
         return False
 
-    def _init_driver(self):
+    @property
+    def _driver(self) -> webdriver.Chrome:
+        """Get the WebDriver, raising if not initialized."""
+        if self.driver is None:
+            raise RuntimeError("WebDriver not initialized. Use context manager or call _init_driver().")
+        return self.driver
+
+    def _init_driver(self) -> None:
         """Initialize the WebDriver."""
         if self.driver is None:
             options = Options()
@@ -140,7 +153,7 @@ class SiteResearcher:
         self,
         page_type: str = PageType.ARCHAEOLOGICAL_SITES,
         max_sites: int | None = None
-    ) -> list[dict]:
+    ) -> list[dict[str, Any]]:
         """
         Get all site links from a listing page.
 
@@ -154,7 +167,7 @@ class SiteResearcher:
         listing_url = f"{self.base_url}/en/{page_type}/"
         logger.info(f"Loading {PageType.get_display_name(page_type)} page: {listing_url}")
 
-        self.driver.get(listing_url)
+        self._driver.get(listing_url)
         time.sleep(config.page_load_wait)
 
         # Load all sites using scroll + "Show More" button
@@ -164,10 +177,10 @@ class SiteResearcher:
 
         while iteration < max_iterations:
             # Scroll to bottom
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            self._driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(config.scroll_wait)
 
-            items = self.driver.find_elements(By.CSS_SELECTOR, "a.listItem")
+            items = self._driver.find_elements(By.CSS_SELECTOR, "a.listItem")
             current_count = len(items)
 
             if current_count > last_count:
@@ -175,14 +188,14 @@ class SiteResearcher:
 
             # Look for "Show More" button
             try:
-                show_more_btns = self.driver.find_elements(
+                show_more_btns = self._driver.find_elements(
                     By.CSS_SELECTOR, '[class*="showMore"], .showMoreBtn'
                 )
                 clicked = False
                 for btn in show_more_btns:
                     try:
                         if btn.is_displayed() and "Show More" in btn.text:
-                            self.driver.execute_script(
+                            self._driver.execute_script(
                                 'arguments[0].scrollIntoView({block: "center"});', btn
                             )
                             time.sleep(0.5)
@@ -200,7 +213,7 @@ class SiteResearcher:
             except Exception:
                 pass
 
-            items = self.driver.find_elements(By.CSS_SELECTOR, "a.listItem")
+            items = self._driver.find_elements(By.CSS_SELECTOR, "a.listItem")
             last_count = len(items)
 
             if max_sites and last_count >= max_sites:
@@ -210,7 +223,7 @@ class SiteResearcher:
 
         # Extract site links
         site_links = []
-        items = self.driver.find_elements(By.CSS_SELECTOR, "a.listItem")
+        items = self._driver.find_elements(By.CSS_SELECTOR, "a.listItem")
         logger.info(f"Found {len(items)} items")
 
         for item in items:
@@ -241,7 +254,7 @@ class SiteResearcher:
                 img = ""
                 try:
                     img_elem = item.find_element(By.TAG_NAME, "img")
-                    img = img_elem.get_attribute("src")
+                    img = img_elem.get_attribute("src") or ""
                 except (NoSuchElementException, StaleElementReferenceException):
                     pass
 
@@ -260,7 +273,7 @@ class SiteResearcher:
         logger.info(f"Total sites found: {len(site_links)}")
         return site_links[:max_sites] if max_sites else site_links
 
-    def research_site(self, site_info: dict) -> Site | None:
+    def research_site(self, site_info: dict[str, Any]) -> Site | None:
         """
         Conduct comprehensive research on a single site.
 
@@ -339,7 +352,7 @@ class SiteResearcher:
             logger.debug(traceback.format_exc())
             return None
 
-    def _research_primary_source(self, url: str, site_info: dict) -> dict | None:
+    def _research_primary_source(self, url: str, site_info: dict[str, Any]) -> dict[str, Any] | None:
         """
         Get detailed information from the primary source (egymonuments.gov.eg).
 
@@ -351,14 +364,14 @@ class SiteResearcher:
             Dictionary with extracted data
         """
         try:
-            self.driver.get(url)
+            self._driver.get(url)
             time.sleep(3)
 
-            data = {}
+            data: dict[str, Any] = {}
 
             # Get page title
             try:
-                title_elem = self.driver.find_element(By.CSS_SELECTOR, "h1, .title h1, .pageTitle")
+                title_elem = self._driver.find_element(By.CSS_SELECTOR, "h1, .title h1, .pageTitle")
                 data["name"] = title_elem.text.strip()
             except NoSuchElementException:
                 data["name"] = site_info.get("name", "")
@@ -366,7 +379,7 @@ class SiteResearcher:
             # Get full description
             paragraphs = []
             try:
-                p_elements = self.driver.find_elements(By.TAG_NAME, "p")
+                p_elements = self._driver.find_elements(By.TAG_NAME, "p")
                 for p in p_elements:
                     text = p.text.strip()
                     # Filter valid content paragraphs (skip navigation/footer text)
@@ -387,16 +400,16 @@ class SiteResearcher:
             arabic_name = ""
             try:
                 arabic_url = url.replace("/en/", "/ar/")
-                current_url = self.driver.current_url
-                self.driver.get(arabic_url)
+                current_url = self._driver.current_url
+                self._driver.get(arabic_url)
                 time.sleep(2)
 
-                title_elem = self.driver.find_element(By.CSS_SELECTOR, "h1")
+                title_elem = self._driver.find_element(By.CSS_SELECTOR, "h1")
                 if title_elem and any('\u0600' <= c <= '\u06FF' for c in title_elem.text):
                     arabic_name = title_elem.text.strip()
                     logger.info(f"Arabic name found: {arabic_name}")
 
-                self.driver.get(current_url)
+                self._driver.get(current_url)
                 time.sleep(2)
             except Exception:
                 pass
@@ -428,7 +441,7 @@ class SiteResearcher:
             if site_info.get("image"):
                 images.append(site_info["image"])
             try:
-                img_elems = self.driver.find_elements(By.CSS_SELECTOR, ".gallery img, .slider img, article img")
+                img_elems = self._driver.find_elements(By.CSS_SELECTOR, ".gallery img, .slider img, article img")
                 for img in img_elems:
                     src = img.get_attribute("src")
                     if src and src not in images and "logo" not in src.lower():
@@ -512,12 +525,12 @@ class SiteResearcher:
         self,
         site_id: str,
         name: str,
-        primary_data: dict,
-        wiki_data,
+        primary_data: dict[str, Any],
+        wiki_data: Any,
         governorate: str,
-        arabic_terms: list,
-        tips_data,
-        site_info: dict
+        arabic_terms: list[Any],
+        tips_data: Any,
+        site_info: dict[str, Any],
     ) -> Site:
         """
         Synthesize all research data into a Site object.
@@ -574,8 +587,8 @@ class SiteResearcher:
 
     def _extract_sub_locations(self, site_id: str, site_name: str, description: str) -> list[SubLocation]:
         """Extract meaningful sub-locations from description."""
-        sub_locations = []
-        found_names = set()
+        sub_locations: list[SubLocation] = []
+        found_names: set[str] = set()
 
         # Patterns for sub-locations
         patterns = [
@@ -616,7 +629,7 @@ class SiteResearcher:
 
         return sub_locations
 
-    def _log_site_summary(self, site: Site):
+    def _log_site_summary(self, site: Site) -> None:
         """Log a summary of the researched site."""
         logger.info(f"Research complete for: {site.name}")
         logger.info(f"  Governorate: {site.governorate}")
@@ -660,7 +673,7 @@ class SiteResearcher:
 
         return self.sites
 
-    def export_to_json(self, output_path: str) -> dict:
+    def export_to_json(self, output_path: str) -> dict[str, Any]:
         """
         Export researched sites to JSON.
 
@@ -670,12 +683,12 @@ class SiteResearcher:
         Returns:
             Exported data dictionary
         """
-        output = {
+        output: dict[str, list[dict[str, Any]]] = {
             "sites": [],
             "subLocations": [],
             "cards": [],
             "tips": [],
-            "arabicPhrases": []
+            "arabicPhrases": [],
         }
 
         for site in self.sites:

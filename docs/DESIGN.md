@@ -1,7 +1,7 @@
 # System Design Document
 ## UnlockEgypt Site Researcher
 
-**Version:** 3.3
+**Version:** 3.4
 **Last Updated:** 2026-02-01
 
 ---
@@ -13,7 +13,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CLI Entry Point                           │
-│                        (research.py)                             │
+│                   (unlockegypt.cli / cli.py)                     │
 └─────────────────────────────┬───────────────────────────────────┘
                               │
                               ▼
@@ -100,8 +100,8 @@ For each site:
 ### 2.2 Module Responsibilities
 
 ```
-src/
-├── research.py              # CLI entry point, argument parsing
+src/unlockegypt/
+├── cli.py                   # CLI entry point, argument parsing
 ├── site_researcher.py       # Main orchestrator
 │   ├── get_site_links()     # Scrape listing pages
 │   ├── research_site()      # 5-step pipeline per site

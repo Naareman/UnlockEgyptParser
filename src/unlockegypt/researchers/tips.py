@@ -10,6 +10,7 @@ Searches for:
 import logging
 import re
 from dataclasses import dataclass, field
+from typing import Any
 from urllib.parse import quote as url_quote
 
 import requests
@@ -59,12 +60,12 @@ class TipsResearcher:
         "egypt.travel",
     ]
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the tips researcher."""
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": config.user_agent})
 
-    def research(self, site_name: str, site_data: dict = None) -> SiteTips:
+    def research(self, site_name: str, site_data: dict[str, Any] | None = None) -> SiteTips:
         """
         Research practical tips for a site.
 
@@ -110,7 +111,7 @@ class TipsResearcher:
 
         return tips
 
-    def _generate_contextual_tips(self, site_name: str, site_data: dict) -> list[str]:
+    def _generate_contextual_tips(self, site_name: str, site_data: dict[str, Any]) -> list[str]:
         """
         Generate tips based on site characteristics.
 
@@ -247,7 +248,7 @@ class TipsResearcher:
         # For most sites, egymonuments.gov.eg is the official source
         return ""
 
-    def _estimate_duration(self, site_name: str, site_data: dict) -> str:
+    def _estimate_duration(self, site_name: str, site_data: dict[str, Any]) -> str:
         """
         Estimate visit duration based on site characteristics.
 
@@ -279,7 +280,7 @@ class TipsResearcher:
 
         return "1-2 hours"
 
-    def _get_best_time(self, site_data: dict) -> str:
+    def _get_best_time(self, site_data: dict[str, Any]) -> str:
         """
         Determine the best time to visit based on site type and location.
 

@@ -43,7 +43,7 @@ class WikipediaResearcher:
     that may not be available on the primary source.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Wikipedia API clients for English and Arabic."""
         user_agent = config.nominatim_user_agent  # Reuse the same educational user agent
         self.wiki_en = wikipediaapi.Wikipedia(
@@ -178,13 +178,13 @@ class WikipediaResearcher:
             try:
                 # Use Wikipedia's search API
                 search_url = "https://en.wikipedia.org/w/api.php"
-                params = {
+                params: dict[str, str | int] = {
                     "action": "query",
                     "list": "search",
                     "srsearch": query,
                     "format": "json",
                     "srlimit": 5,  # Get top 5 results
-                    "srprop": "snippet"
+                    "srprop": "snippet",
                 }
                 headers = {"User-Agent": config.nominatim_user_agent}
 
@@ -281,7 +281,7 @@ class WikipediaResearcher:
         Looks for sentences containing superlatives, numbers, dates,
         and unique characteristics.
         """
-        facts = []
+        facts: list[str] = []
         sentences = re.split(r'(?<=[.!?])\s+', text)
 
         # Patterns for interesting facts
@@ -338,7 +338,7 @@ class WikipediaResearcher:
         # Look in the first part of the article (usually introduction)
         intro = text[:2000]
 
-        matches = self._period_pattern.findall(intro)
+        matches: list[str] = self._period_pattern.findall(intro)
         if matches:
             # Return the first (most prominent) period mentioned
             return matches[0]
@@ -351,7 +351,7 @@ class WikipediaResearcher:
 
         Returns a dictionary mapping English terms to Arabic.
         """
-        terms = {}
+        terms: dict[str, str] = {}
 
         page_en = self.wiki_en.page(page_title)
         if not page_en.exists():

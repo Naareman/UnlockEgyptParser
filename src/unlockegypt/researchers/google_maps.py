@@ -52,7 +52,7 @@ class GoogleMapsResearcher:
 
     GOOGLE_MAPS_URL = "https://www.google.com/maps/search/"
 
-    def __init__(self, driver: webdriver.Chrome | None = None):
+    def __init__(self, driver: webdriver.Chrome | None = None) -> None:
         """
         Initialize the Google Maps researcher.
 
@@ -120,7 +120,7 @@ class GoogleMapsResearcher:
             logger.warning(f"Google Maps research failed for {site_name}: {e}")
             return None
 
-    def _extract_basic_info(self, driver: webdriver.Chrome, data: GoogleMapsData):
+    def _extract_basic_info(self, driver: webdriver.Chrome, data: GoogleMapsData) -> None:
         """Extract basic place information."""
         try:
             # Try to find the place name
@@ -171,7 +171,7 @@ class GoogleMapsResearcher:
         except Exception as e:
             logger.debug(f"Error extracting basic info: {e}")
 
-    def _extract_opening_hours(self, driver: webdriver.Chrome, data: GoogleMapsData):
+    def _extract_opening_hours(self, driver: webdriver.Chrome, data: GoogleMapsData) -> None:
         """Extract opening hours information."""
         try:
             # Try to find and click on opening hours to expand
@@ -212,7 +212,7 @@ class GoogleMapsResearcher:
         except Exception as e:
             logger.debug(f"Error extracting opening hours: {e}")
 
-    def _parse_hours_text(self, text: str, data: GoogleMapsData):
+    def _parse_hours_text(self, text: str, data: GoogleMapsData) -> None:
         """Parse opening hours text into structured format."""
         days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
@@ -229,7 +229,7 @@ class GoogleMapsResearcher:
                         data.opening_hours[day.title()] = "Closed"
                     break
 
-    def _extract_coordinates_from_url(self, driver: webdriver.Chrome, data: GoogleMapsData):
+    def _extract_coordinates_from_url(self, driver: webdriver.Chrome, data: GoogleMapsData) -> None:
         """Extract coordinates from the Google Maps URL."""
         try:
             current_url = driver.current_url
@@ -244,7 +244,7 @@ class GoogleMapsResearcher:
         except Exception as e:
             logger.debug(f"Error extracting coordinates: {e}")
 
-    def _extract_reviews_info(self, driver: webdriver.Chrome, data: GoogleMapsData):
+    def _extract_reviews_info(self, driver: webdriver.Chrome, data: GoogleMapsData) -> None:
         """Extract rating and review count."""
         try:
             # Try to find rating

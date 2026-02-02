@@ -1,7 +1,7 @@
 # Technology Stack Document
 ## UnlockEgypt Site Researcher
 
-**Version:** 3.3
+**Version:** 3.4
 **Last Updated:** 2026-02-01
 
 ---
@@ -125,7 +125,7 @@ UnlockEgyptParser/
 │   └── unlockegypt/
 │       ├── __init__.py
 │       ├── py.typed        # PEP 561 marker
-│       ├── research.py     # CLI entry point
+│       ├── cli.py          # CLI entry point
 │       ├── site_researcher.py
 │       ├── models/
 │       ├── researchers/
