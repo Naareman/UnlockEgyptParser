@@ -112,3 +112,4 @@ temp/
 .env.*.local
 secrets.yaml
 credentials.json
+.unlockegypt_checkpoint.json
